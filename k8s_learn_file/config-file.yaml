@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: config-file
+data:
+  config.file: |
+     log_dest stdout
+     log_type all
+     log_timestamp true
+     listener 9001
