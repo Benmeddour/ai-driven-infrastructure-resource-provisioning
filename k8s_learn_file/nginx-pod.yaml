@@ -12,6 +12,6 @@ spec:
       ports:
         - containerPort: 80
     - name: sidecar
-      image: curlimage/curl
+      image: curlimages/curl
       command: ["/bin/sh"]
       args: ["-c", "echo Hello from the sidecar container; sleep 300"]
