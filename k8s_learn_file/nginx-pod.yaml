@@ -1,3 +1,4 @@
+# this for testing the comminucation btw two container inside one pod and creating mulitipule container inside one pod
 apiVersion: v1
 kind: Pod
 metadata:
