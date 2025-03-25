@@ -1,12 +1,3 @@
-apiVersion: v1
-kind: Secret
-metadata:
-  name: testdocker-secret  # Secret name
-type: kubernetes.io/dockerconfigjson
-data:
-  .dockerconfigjson: ewogICJhdXRocyI6IHsKICAgICJodHRwczovL2luZGV4LmRvY2tlci5pby92MS8iOiB7CiAgICAgICJhdXRoIjogImJtRm1ZV1ZpYlRwa1kydHlYM0JoZEY5b1VrRnRTMFJOUlhBNGJUTklhVFpWUjI4eGJHVjNWWFpWWWpBPSIKICAgIH0KICB9LAogICJIdHRwSGVhZGVycyI6IHsKICAgICJVc2VyLUFnZW50IjogIkRvY2tlci1DbGllbnQvMTkuMDMuMTIgKGxpbnV4KSIKICB9Cn0KCg==
-
----
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -23,11 +14,9 @@ spec:
       labels:
         app: learn-nginx-app
     spec:
-      imagePullSecrets:
-        - name: testdocker-secret  # Reference to the secret created above
       containers:
       - name: learn-nginx-app
-        image: nginx
+        image: nafaebm/publicimages:learn-nginx-app
         ports:
         - containerPort: 80
 
