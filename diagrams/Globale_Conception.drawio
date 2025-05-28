@@ -1,6 +1,6 @@
 <mxfile host="app.diagrams.net" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36 Edg/136.0.0.0" version="27.0.9">
   <diagram name="Page-1" id="Wlxe_tvuxaGqOvqjTU4U">
-    <mxGraphModel dx="1323" dy="1707" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+    <mxGraphModel dx="3272" dy="2267" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="I0w8ZeEhanJccv9AlH1--89" style="" parent="0" />
@@ -374,13 +374,13 @@
         <mxCell id="lsV8h-Xdbz0RIE_9G-Dl-3" value="&lt;font face=&quot;Comic Sans MS&quot;&gt;collect Metrics/ logs&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;strokeColor=#ADB5BD;fontColor=#495057;fillColor=#FFFFFF;" vertex="1" parent="I0w8ZeEhanJccv9AlH1--116">
           <mxGeometry x="-629.52" y="-147" width="122" height="27" as="geometry" />
         </mxCell>
-        <mxCell id="lsV8h-Xdbz0RIE_9G-Dl-6" value="Container" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=none;fontColor=#212529;fillColor=none;shadow=0;fontSize=8;" vertex="1" parent="I0w8ZeEhanJccv9AlH1--116">
+        <mxCell id="lsV8h-Xdbz0RIE_9G-Dl-6" value="Container" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=none;fontColor=#212529;fillColor=none;shadow=0;fontSize=9;" vertex="1" parent="I0w8ZeEhanJccv9AlH1--116">
           <mxGeometry x="-28.26" y="200" width="43.49" height="8.75" as="geometry" />
         </mxCell>
-        <mxCell id="lsV8h-Xdbz0RIE_9G-Dl-7" value="Container" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=none;fontColor=#212529;fillColor=none;shadow=0;fontSize=8;" vertex="1" parent="I0w8ZeEhanJccv9AlH1--116">
-          <mxGeometry x="-86.6" y="170.63" width="43.49" height="8.75" as="geometry" />
+        <mxCell id="lsV8h-Xdbz0RIE_9G-Dl-7" value="Container" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=none;fontColor=#212529;fillColor=none;shadow=0;fontSize=9;" vertex="1" parent="I0w8ZeEhanJccv9AlH1--116">
+          <mxGeometry x="-88" y="170.63" width="43.49" height="8.75" as="geometry" />
         </mxCell>
-        <mxCell id="lsV8h-Xdbz0RIE_9G-Dl-8" value="Container" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=none;fontColor=#212529;fillColor=none;shadow=0;fontSize=8;" vertex="1" parent="I0w8ZeEhanJccv9AlH1--116">
+        <mxCell id="lsV8h-Xdbz0RIE_9G-Dl-8" value="Container" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=none;fontColor=#212529;fillColor=none;shadow=0;fontSize=9;" vertex="1" parent="I0w8ZeEhanJccv9AlH1--116">
           <mxGeometry x="32.55" y="170.63" width="43.49" height="8.75" as="geometry" />
         </mxCell>
         <mxCell id="lsV8h-Xdbz0RIE_9G-Dl-15" value="Cluster Communication" style="edgeLabel;align=center;verticalAlign=middle;resizable=0;points=[];labelBackgroundColor=light-dark(#E8F5E9,#00284D);labelBorderColor=none;fontSize=10;whiteSpace=wrap;fontFamily=Verdana;fontColor=#212529;" vertex="1" connectable="0" parent="I0w8ZeEhanJccv9AlH1--116">
