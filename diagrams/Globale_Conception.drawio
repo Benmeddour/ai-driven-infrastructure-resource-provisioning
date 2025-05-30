@@ -496,7 +496,7 @@
           </mxGeometry>
         </mxCell>
         <mxCell id="RhChatTosRu_DMWPIghc-14" value="&lt;font face=&quot;Comic Sans MS&quot;&gt;Provides Provisioning Result&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;strokeColor=#90A4AE;fontColor=#495057;fillColor=#FFFFFF;spacingRight=0;spacingBottom=2;" vertex="1" parent="I0w8ZeEhanJccv9AlH1--116">
-          <mxGeometry x="-79" y="-543.25" width="105.72" height="33.25" as="geometry" />
+          <mxGeometry x="-79" y="-543.25" width="105.72" height="35" as="geometry" />
         </mxCell>
         <mxCell id="RhChatTosRu_DMWPIghc-16" value="&lt;font face=&quot;Comic Sans MS&quot;&gt;Provides Structured Data&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;strokeColor=#90A4AE;fontColor=#495057;fillColor=#FFFFFF;spacingBottom=2;" vertex="1" parent="I0w8ZeEhanJccv9AlH1--116">
           <mxGeometry x="-279.76" y="-543.25" width="95.75" height="30" as="geometry" />
