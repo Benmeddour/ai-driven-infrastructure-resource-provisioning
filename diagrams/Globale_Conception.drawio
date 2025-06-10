@@ -1,4 +1,4 @@
-<mxfile host="app.diagrams.net" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36 Edg/137.0.0.0" version="27.1.1" pages="5">
+<mxfile host="app.diagrams.net" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36 Edg/137.0.0.0" version="27.1.1" pages="6">
   <diagram name="Page-1" id="Wlxe_tvuxaGqOvqjTU4U">
     <mxGraphModel dx="1702" dy="1570" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
       <root>
@@ -515,7 +515,7 @@
     </mxGraphModel>
   </diagram>
   <diagram id="08gnf7knZfGyFOXDpjE9" name="Page-2">
-    <mxGraphModel grid="1" page="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" pageScale="1" pageWidth="1169" pageHeight="827" math="0" shadow="0">
+    <mxGraphModel dx="2503" dy="1540" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1169" pageHeight="827" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
@@ -847,11 +847,55 @@
         <mxCell id="5iINsdI7WfYa_gqdCYDz-2" value="Control Plane Node" style="rounded=1;whiteSpace=wrap;html=1;strokeColor=#90A4AE;fontColor=#212529;fillColor=#A8DADC;" vertex="1" parent="1">
           <mxGeometry x="1445.49" y="560.37" width="76.52" height="36.25" as="geometry" />
         </mxCell>
+        <mxCell id="9nOFnPFJkV16DD1uK0j2-1" value="" style="rounded=1;whiteSpace=wrap;html=1;labelBackgroundColor=none;fillColor=#E3F2FD;strokeColor=#90A4AE;fontColor=#212529;arcSize=4;" vertex="1" parent="1">
+          <mxGeometry x="2320" y="940" width="780" height="160" as="geometry" />
+        </mxCell>
+        <mxCell id="9nOFnPFJkV16DD1uK0j2-2" value="Monitoring, Management and Automation Layer" style="text;strokeColor=none;fillColor=light-dark(#0056B3,#0085FF);align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;html=1;fontColor=#FFFFFF;rounded=1;shadow=1;fontFamily=Helvetica;fontSize=14;fontStyle=1" vertex="1" parent="1">
+          <mxGeometry x="2362" y="924" width="328" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="9nOFnPFJkV16DD1uK0j2-3" value="" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];strokeColor=#457B9D;fontColor=#1D3557;fillColor=#A8DADC;" vertex="1" connectable="0" parent="1">
+          <mxGeometry x="2786.032415223478" y="960" as="geometry" />
+        </mxCell>
+        <mxCell id="9nOFnPFJkV16DD1uK0j2-4" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;strokeColor=#6C757D;flowAnimation=1;" edge="1" parent="1" source="9nOFnPFJkV16DD1uK0j2-5" target="9nOFnPFJkV16DD1uK0j2-8">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="9nOFnPFJkV16DD1uK0j2-5" value="Monitoring System" style="rounded=1;whiteSpace=wrap;html=1;strokeColor=#90A4AE;fontColor=#212529;fillColor=#BBDEFB;" vertex="1" parent="1">
+          <mxGeometry x="2394.98" y="1000" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="9nOFnPFJkV16DD1uK0j2-6" value="&lt;font face=&quot;Comic Sans MS&quot;&gt;Fetch info&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;strokeColor=#90A4AE;fontColor=#495057;fillColor=#FFFFFF;" vertex="1" parent="1">
+          <mxGeometry x="2753.48" y="910" width="66.52" height="15" as="geometry" />
+        </mxCell>
+        <mxCell id="9nOFnPFJkV16DD1uK0j2-7" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;strokeColor=#6C757D;" edge="1" parent="1" source="9nOFnPFJkV16DD1uK0j2-8" target="9nOFnPFJkV16DD1uK0j2-9">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="9nOFnPFJkV16DD1uK0j2-8" value="Management System" style="rounded=1;whiteSpace=wrap;html=1;strokeColor=#90A4AE;fontColor=#212529;fillColor=#BBDEFB;" vertex="1" parent="1">
+          <mxGeometry x="2660.2200000000003" y="1000" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="9nOFnPFJkV16DD1uK0j2-9" value="Automation system" style="rounded=1;whiteSpace=wrap;html=1;strokeColor=#90A4AE;fontColor=#212529;fillColor=#BBDEFB;" vertex="1" parent="1">
+          <mxGeometry x="2952.48" y="1000" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="9nOFnPFJkV16DD1uK0j2-10" value="&lt;font face=&quot;Comic Sans MS&quot;&gt;Provides Data, Logs and metrics&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;strokeColor=#90A4AE;fontColor=#495057;fillColor=#FFFFFF;" vertex="1" parent="1">
+          <mxGeometry x="2534.64" y="1011.25" width="105.36" height="37.5" as="geometry" />
+        </mxCell>
+        <mxCell id="9nOFnPFJkV16DD1uK0j2-11" value="&lt;font face=&quot;Comic Sans MS&quot;&gt;Triggers automation&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;strokeColor=#90A4AE;fontColor=#495057;fillColor=#FFFFFF;" vertex="1" parent="1">
+          <mxGeometry x="2828.56" y="1015" width="73.19" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="9nOFnPFJkV16DD1uK0j2-12" value="&lt;font face=&quot;Comic Sans MS&quot;&gt;Manages Cluster Resources&lt;/font&gt;" style="rounded=1;strokeColor=#ADB5BD;fontColor=#495057;fillColor=#FFFFFF;html=1;whiteSpace=wrap;" vertex="1" parent="1">
+          <mxGeometry x="2828.56" y="964" width="103.04" height="30.25" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram id="1T_FQ6pigdcl50T6JYOq" name="Monitoring, Management and Automation Layer detailed">
+    <mxGraphModel dx="2860" dy="1760" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="0" pageScale="1" pageWidth="1169" pageHeight="827" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
       </root>
     </mxGraphModel>
   </diagram>
   <diagram id="Gv2gMHc-vsguFVEJforl" name="Container Orchestration Layer detailed">
-    <mxGraphModel dx="1430" dy="880" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1169" pageHeight="827" math="0" shadow="0">
+    <mxGraphModel grid="1" page="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" pageScale="1" pageWidth="1169" pageHeight="827" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
