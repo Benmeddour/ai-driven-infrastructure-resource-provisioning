@@ -515,7 +515,7 @@
     </mxGraphModel>
   </diagram>
   <diagram id="08gnf7knZfGyFOXDpjE9" name="Page-2">
-    <mxGraphModel dx="2503" dy="1540" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1169" pageHeight="827" math="0" shadow="0">
+    <mxGraphModel dx="1178" dy="725" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1169" pageHeight="827" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
@@ -862,9 +862,6 @@
         <mxCell id="9nOFnPFJkV16DD1uK0j2-5" value="Monitoring System" style="rounded=1;whiteSpace=wrap;html=1;strokeColor=#90A4AE;fontColor=#212529;fillColor=#BBDEFB;" vertex="1" parent="1">
           <mxGeometry x="2394.98" y="1000" width="120" height="60" as="geometry" />
         </mxCell>
-        <mxCell id="9nOFnPFJkV16DD1uK0j2-6" value="&lt;font face=&quot;Comic Sans MS&quot;&gt;Fetch info&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;strokeColor=#90A4AE;fontColor=#495057;fillColor=#FFFFFF;" vertex="1" parent="1">
-          <mxGeometry x="2753.48" y="910" width="66.52" height="15" as="geometry" />
-        </mxCell>
         <mxCell id="9nOFnPFJkV16DD1uK0j2-7" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;strokeColor=#6C757D;" edge="1" parent="1" source="9nOFnPFJkV16DD1uK0j2-8" target="9nOFnPFJkV16DD1uK0j2-9">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
@@ -879,9 +876,6 @@
         </mxCell>
         <mxCell id="9nOFnPFJkV16DD1uK0j2-11" value="&lt;font face=&quot;Comic Sans MS&quot;&gt;Triggers automation&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;strokeColor=#90A4AE;fontColor=#495057;fillColor=#FFFFFF;" vertex="1" parent="1">
           <mxGeometry x="2828.56" y="1015" width="73.19" height="30" as="geometry" />
-        </mxCell>
-        <mxCell id="9nOFnPFJkV16DD1uK0j2-12" value="&lt;font face=&quot;Comic Sans MS&quot;&gt;Manages Cluster Resources&lt;/font&gt;" style="rounded=1;strokeColor=#ADB5BD;fontColor=#495057;fillColor=#FFFFFF;html=1;whiteSpace=wrap;" vertex="1" parent="1">
-          <mxGeometry x="2828.56" y="964" width="103.04" height="30.25" as="geometry" />
         </mxCell>
       </root>
     </mxGraphModel>
