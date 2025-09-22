@@ -1,0 +1,25 @@
+
+# --- Terraform User Variables ---
+tf_pve_user_id: "terraform@pam"         # format user@realm
+tf_pve_user_comment: "User for Terraform provisioning"
+tf_pve_user_groups: "terraformgroup" # Group for Terraform user
+tf_pve_user_enabled: true
+tf_pve_user_expire: 0               # 0 = no expiration
+
+# --- Terraform Role Variables ---
+tf_pve_role_name: "TerraformProvisioner" # Role name for Terraform
+tf_pve_role_privs: "VM.Audit,VM.Allocate,VM.Clone,VM.Config.CDROM,VM.Config.Disk,VM.Config.HWType,VM.Config.Memory,VM.Config.Cloudinit,VM.Config.CPU,VM.Migrate,VM.Config.Network,VM.Config.Options,VM.Monitor,VM.PowerMgmt,VM.Snapshot,Datastore.AllocateSpace,Datastore.Audit,SDN.Use,Pool.Allocate,Sys.Modify,Sys.PowerMgmt,Sys.Audit,Sys.Console" # Privileges for Terraform role
+
+# --- Terraform Group Variables ---
+tf_pve_group_name: "terraformgroup" # Group name for Terraform
+tf_pve_group_comment: "Group for Terraform user and permissions"
+
+# --- Terraform API Token Variables ---
+tf_pve_apitoken_name: "terraformAPI" # API token name for Terraform
+tf_pve_apitoken_comment: "API token for Terraform provisioning"
+
+# handlers:
+api_token_print: 
+  - Extract Terraform API token from CLI output
+  - Show CLI output
+  - Show extracted Terraform API token

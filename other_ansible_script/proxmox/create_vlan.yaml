@@ -1,0 +1,35 @@
+# This Ansible playbook creates a VLAN on a specified bridge in Proxmox and restarts the network to apply changes.
+- name: Create a VLAN in Proxmox
+  hosts: localhost
+  gather_facts: no
+
+  vars:
+    proxmox_api_url: "https://your-proxmox-server:8006/api2/json"
+    proxmox_user: "root@pam"
+    proxmox_password: "adminproxmox"
+    proxmox_node: "<node-name>" # Replace with your Proxmox node name
+    vlan_id: 100 # Replace with the desired VLAN ID
+    bridge_name: "vmbr0" # Replace with the desired bridge name
+
+  tasks:
+    - name: Create VLAN on the bridge
+      ansible.builtin.uri:
+        url: "{{ proxmox_api_url }}/nodes/{{ proxmox_node }}/network"
+        method: POST
+        user: "{{ proxmox_user }}"
+        password: "{{ proxmox_password }}"
+        force_basic_auth: yes
+        validate_certs: no
+        body:
+          type: "vlan"
+          bridge: "{{ bridge_name }}"
+          vlanid: "{{ vlan_id }}"
+        body_format: json
+        status_code: 200
+      register: vlan_creation
+      failed_when: vlan_creation.status != 200
+
+    - name: Restart network to apply changes
+      ansible.builtin.command:
+        cmd: "systemctl restart networking"
+      become: yes

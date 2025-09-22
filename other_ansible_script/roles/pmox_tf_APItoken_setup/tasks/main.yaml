@@ -1,0 +1,80 @@
+- name: create terraform user
+  ansible.builtin.command:
+    argv: # Using argv to handle spaces in arguments
+          - pveum
+          - user
+          - add
+          - "{{ tf_pve_user_id }}"
+          - --comment
+          - "{{ tf_pve_user_comment }}"
+          - --enable
+          - "{{ '1' if tf_pve_user_enabled else '0' }}"
+          - --expire
+          - "{{ tf_pve_user_expire }}"
+
+- name: Create the role TerraformProvisioner
+  ansible.builtin.command:
+    argv:
+          - pveum
+          - role
+          - add
+          - "{{ tf_pve_role_name }}"                 
+          - --privs
+          - "{{ tf_pve_role_privs }}"
+
+- name: Create a terraform group
+  ansible.builtin.command:
+    argv:
+          - pveum
+          - group
+          - add
+          - "{{ tf_pve_group_name }}"                       
+          - --comment
+          - "{{ tf_pve_group_comment }}"
+
+- name: Create Group Permissions
+  ansible.builtin.command:
+    argv:
+      - pveum
+      - acl
+      - modify
+      - "/"
+      - --group
+      - "{{ tf_pve_group_name }}"
+      - --role
+      - "{{ tf_pve_role_name }}"
+      - --propagate
+      - 1
+
+- name: Add terraform user to group terraform
+  ansible.builtin.command:
+    argv:
+      - pveum
+      - user
+      - modify
+      - "{{ tf_pve_user_id }}"
+      - --group
+      - "{{ tf_pve_group_name }}"                       
+
+  
+- name: Create the terraform api token
+  ansible.builtin.command:
+    argv:
+          - pveum
+          - user
+          - token
+          - add
+          - "{{ tf_pve_user_id }}"
+          - "{{ tf_pve_apitoken_name }}"
+          - --comment
+          - "{{ tf_pve_apitoken_comment }}"
+          - --privsep
+          - 0
+  register: pve_apitoken_result
+  notify: "{{ api_token_print }}"
+
+
+  
+  
+
+

@@ -1,0 +1,17 @@
+- name: Initialize Proxmox VE Cluster on pmox01
+  hosts: proxmox
+  become: true
+  vars:
+    cluster_name: "pve-cluster"
+  tasks:
+    - name: Initialize cluster
+      ansible.builtin.command:
+        argv:
+          - pvecm
+          - create
+          - "{{ cluster_name }}"
+## for the documentation https://www.virtualizationhowto.com/2023/02/proxmox-cluster-installation-and-configuration/
+
+
+   
+      

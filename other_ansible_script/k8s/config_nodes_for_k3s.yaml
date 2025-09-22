@@ -1,0 +1,5 @@
+- name: Setup the k3s cluster using ansible
+  hosts: worker-node3
+  become: true
+  roles:
+    - k3s_nodes_setup

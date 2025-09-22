@@ -1,0 +1,25 @@
+proxmox:  # we define the group variable for the proxmox group in ~/.ansible/test/group_vars/proxmox.yaml
+  hosts:
+    proxmox1:
+      ansible_host: 172.25.5.201
+    proxmox2: 
+      ansible_host: 172.25.5.202
+    proxmox3:
+      ansible_host: 172.25.5.203
+    proxmox4:
+      ansible_host: 172.25.5.197
+
+ubuntu: # we define the group variable for the ubuntu group in ~/.ansible/test/group_vars/ubuntu.yaml
+  hosts:
+    controle-node-1:
+      ansible_host: 192.168.0.5
+    controle-node-2:
+      ansible_host: 192.168.0.6
+    controle-node-3:
+      ansible_host: 192.168.0.7
+    worker-node1:
+      ansible_host: 192.168.0.13
+    worker-node2:
+      ansible_host: 192.168.0.12
+    worker-node3:
+      ansible_host: 192.168.0.14

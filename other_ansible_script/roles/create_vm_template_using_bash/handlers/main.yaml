@@ -1,0 +1,14 @@
+- name: wait untill vm template is ready
+  wait_for:
+    port: 22
+    delay: 10
+    timeout: 300
+    state: started
+  when: script_execution.rc == 0
+  register: wait_for_vm_template
+
+- name: wait for vm template to be ready
+  debug:
+    msg: "VM template is ready"
+  when: wait_for_vm_template is not failed
+  

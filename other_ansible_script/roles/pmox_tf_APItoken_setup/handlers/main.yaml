@@ -1,0 +1,16 @@
+- name: Extract Terraform API token from CLI output
+  set_fact:
+    terraform_api_token: "{{ pve_apitoken_result.stdout | regex_search('^│\\s*value\\s*│\\s*([^│\\n]+?)\\s*│', '\\1', multiline=True) | first | trim }}"
+
+- name: Show CLI output
+  ansible.builtin.debug:
+    var: pve_apitoken_result
+
+- name: Show extracted Terraform API token
+  ansible.builtin.debug:
+    var: terraform_api_token
+  when: terraform_api_token is defined
+
+
+
+

@@ -1,0 +1,77 @@
+---
+# Ansible playbook to schedule snapshots for all VMs in Proxmox
+      - name: Schedule snapshots for all VMs in Proxmox
+        hosts: localhost
+        gather_facts: no
+
+        vars:
+          proxmox_api_url: "https://your-proxmox-server:8006/api2/json"
+          proxmox_user: "root@pam"
+          proxmox_password: "YourPassword"
+          snapshot_schedule: "0 2 * * *"  # Schedule for 2 AM daily
+          # NOTE: Replace <node-name> below with your actual Proxmox node name
+          proxmox_node: "<node-name>"
+          # NOTE: Replace /path/to with the actual path where snapshot playbooks should be stored
+          snapshot_script_path: "/path/to"
+
+        tasks:
+          - name: Get list of all VMs
+            ansible.builtin.uri:
+              url: "{{ proxmox_api_url }}/nodes/{{ proxmox_node }}/qemu"
+              method: GET
+              user: "{{ proxmox_user }}"
+              password: "{{ proxmox_password }}"
+              force_basic_auth: yes
+              validate_certs: no
+              status_code: 200
+            register: vm_list
+            failed_when: vm_list.status != 200
+            changed_when: false
+
+          # Ensure the snapshot script path exists
+          - name: Ensure cron job is set for each VM snapshot playbook
+            ansible.builtin.cron:
+              name: "Snapshot VM {{ item.vmid }}"
+              minute: "{{ snapshot_schedule.split()[0] }}"
+              hour: "{{ snapshot_schedule.split()[1] }}"
+              day: "{{ snapshot_schedule.split()[2] }}"
+              month: "{{ snapshot_schedule.split()[3] }}"
+              weekday: "{{ snapshot_schedule.split()[4] }}"
+              job: "ansible-playbook {{ snapshot_script_path }}/snapshot_vm_{{ item.vmid }}.yaml"
+              state: present
+            with_items: "{{ vm_list.json.data | default([]) }}" # Use default filter for safety
+            when: vm_list.json is defined and vm_list.json.data is defined and vm_list.json.data is iterable
+
+          # Create individual snapshot playbooks for each VM
+          - name: Create individual snapshot playbooks
+            ansible.builtin.copy:
+              dest: "{{ snapshot_script_path }}/snapshot_vm_{{ item.vmid }}.yaml"
+              content: |
+                ---
+                - name: Snapshot VM {{ item.vmid }}
+                  hosts: localhost
+                  gather_facts: no
+
+                  vars:
+                    proxmox_api_url: "{{ proxmox_api_url }}"
+                    proxmox_user: "{{ proxmox_user }}"
+                    proxmox_password: "{{ proxmox_password }}"
+                    proxmox_node: "{{ proxmox_node }}"
+                    vmid: "{{ item.vmid }}"
+
+                  tasks:
+                    - name: Take snapshot of VM {{ vmid }}
+                      ansible.builtin.uri:
+                        url: "{{ proxmox_api_url }}/nodes/{{ proxmox_node }}/qemu/{{ vmid }}/snapshot"
+                        method: POST
+                        user: "{{ proxmox_user }}"
+                        password: "{{ proxmox_password }}"
+                        force_basic_auth: yes
+                        validate_certs: no
+                        body:
+                          snapname: "auto-snapshot-{{ lookup('pipe', 'date +%Y%m%d_%H%M%S') }}"
+                        body_format: json
+                        status_code: 200
+              mode: '0644'
+              with_items: "{{ vm_list.json.data | default([]) }}" # Use default filter for safety
+              when: vm_list.json is defined and vm_list.json.data is defined and vm_list.json.data is iterable

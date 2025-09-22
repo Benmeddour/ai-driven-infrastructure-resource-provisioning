@@ -1,0 +1,33 @@
+---
+- name: Install ovs(openvswitch) on Proxmox
+  hosts: proxmox
+  become: true
+  gather_facts: no
+  tasks:
+    - name: insall openvswitch on proxmox
+      apt:
+        name: openvswitch-switch
+        state: present
+        update_cache: yes
+
+- name: Set up terraform API token for Proxmox then create a the k3s template vm using bash
+  hosts: proxmox1
+  become: true
+  gather_facts: no
+  roles:
+    - pmox_tf_APItoken_setup
+
+
+- name: Create vm template using bash
+  hosts: proxmox1
+  become: true
+  gather_facts: no
+  roles:
+     - create_vm_template_using_bash
+
+    
+    
+
+   
+
+  

@@ -1,0 +1,21 @@
+---
+
+
+- name: Copy create_vm_template.sh script to proxmox host
+  copy:
+    src: create_vm_template.sh
+    dest: "{{ destination_path }}"
+    owner: root
+    group: root 
+    mode: 0755
+  register: copy_script
+  
+
+- name: Execute the script on proxmox host
+  ansible.builtin.command:
+    argv: # Using argv to handle spaces in arguments
+      - bash
+      - "{{ destination_path }}"
+  when: copy_script.changed
+  register: script_execution
+  notify: "{{execute_another_things}}"

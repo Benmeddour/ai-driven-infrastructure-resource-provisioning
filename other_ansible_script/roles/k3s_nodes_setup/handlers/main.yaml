@@ -1,0 +1,13 @@
+- name: Start and enable qemu-guest-agent service
+  ansible.builtin.systemd:
+    name: qemu-guest-agent
+    state: started
+    enabled: yes
+  become: true
+
+- name: Reboot k3s nodes
+  ansible.builtin.reboot:
+    msg: "Rebooting k3s nodes to apply changes"
+    connect_timeout: 5
+    reboot_timeout: 600
+  become: true

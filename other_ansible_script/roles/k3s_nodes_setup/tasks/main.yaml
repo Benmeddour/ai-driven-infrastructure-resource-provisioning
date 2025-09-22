@@ -1,0 +1,13 @@
+---
+- name: Update apt cache
+  ansible.builtin.apt:
+    update_cache: yes
+  become: true
+
+- name: Install qemu-guest-agent
+  ansible.builtin.apt:
+    name: "{{package_name}}"
+    state: present
+  become: true
+  notify: "{{after_installation_notify}}"
+

@@ -1,0 +1,4 @@
+destination_path: "~/create_vm_template.sh"
+execute_another_things: 
+- wait untill vm template is ready
+- wait for vm template to be ready

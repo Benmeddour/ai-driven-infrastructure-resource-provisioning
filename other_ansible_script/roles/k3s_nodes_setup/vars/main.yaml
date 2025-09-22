@@ -1,0 +1,6 @@
+package_name: qemu-guest-agent
+# This variable is used to install the qemu-guest-agent package on the k3s nodes.
+after_installation_notify: 
+  - Start and enable qemu-guest-agent service
+# This variable is used to notify the handler to restart the qemu-guest-agent service after installation.
+  - Reboot k3s nodes

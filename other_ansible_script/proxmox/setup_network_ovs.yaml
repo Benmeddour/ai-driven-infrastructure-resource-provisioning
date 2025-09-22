@@ -1,0 +1,28 @@
+
+
+- name: Set up Proxmox network
+  hosts: proxmox
+  become: true
+  tasks:
+    - name: insall openvswitch on proxmox
+      apt:
+        name: openvswitch-switch
+        state: present
+        update_cache: yes
+    - name: Configure network interfaces
+      copy:
+        src: "{{network_file}}"
+        dest: /etc/network/interfaces
+        owner: root
+        group: root
+        mode: '0644'
+        backup: yes
+      notify: Restart networking
+
+  handlers:
+    - name: Restart networking
+      ansible.builtin.systemd:
+        name: networking
+        state: restarted
+
+# after that config sdn in GUI
