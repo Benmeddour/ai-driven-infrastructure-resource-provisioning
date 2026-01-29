@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Master's Thesis: Implementation Chapter Plan</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #f4f7f6;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 960px;
+            margin: 20px auto;
+            padding: 20px 40px;
+            background-color: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+        }
+        h1, h2, h3, h4 {
+            color: #2c3e50;
+            font-weight: 600;
+        }
+        h1 {
+            text-align: center;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+        }
+        h2 {
+            border-bottom: 1px solid #e0e0e0;
+            padding-bottom: 8px;
+            margin-top: 40px;
+        }
+        h3 {
+            color: #2980b9;
+            margin-top: 30px;
+        }
+        .chapter-goal {
+            background-color: #eaf5ff;
+            border-left: 5px solid #3498db;
+            padding: 15px 20px;
+            margin: 20px 0;
+            font-style: italic;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 25px 0;
+            box-shadow: 0 2px 3px rgba(0,0,0,0.1);
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: left;
+        }
+        th {
+            background-color: #34495e;
+            color: #ffffff;
+            font-weight: bold;
+        }
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+        tr:hover {
+            background-color: #f1f1f1;
+        }
+        ul {
+            list-style-type: none;
+            padding-left: 0;
+        }
+        ul li {
+            position: relative;
+            padding-left: 25px;
+            margin-bottom: 10px;
+        }
+        ul li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: #27ae60;
+            font-weight: bold;
+        }
+        blockquote {
+            background: #f9f9f9;
+            border-left: 5px solid #7f8c8d;
+            margin: 1.5em 0;
+            padding: 1em 1.5em;
+            color: #555;
+        }
+        blockquote ul li::before {
+            content: '▸';
+            color: #7f8c8d;
+        }
+        code {
+            background-color: #ecf0f1;
+            color: #c0392b;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-family: "Courier New", Courier, monospace;
+            font-size: 0.9em;
+        }
+        pre {
+            background-color: #2d2d2d;
+            color: #f8f8f2;
+            padding: 15px;
+            border-radius: 5px;
+            overflow-x: auto;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+        }
+        pre code {
+            background: none;
+            color: inherit;
+            padding: 0;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Thesis Chapter Plan: Chapter X - System Implementation</h1>
+
+        <div class="chapter-goal">
+            <p><strong>Chapter Goal:</strong> To describe the practical realization of the conceptual architecture. This chapter details the specific hardware, software, tools, and configurations used to build the multi-layered, highly available, and automated cloud environment. It serves as a bridge between the theoretical design (previous chapter) and the empirical evaluation (next chapter).</p>
+        </div>
+
+        <h2>Outline</h2>
+        <ul>
+            <li>X.1 Introduction
+                <ul>
+                    <li>X.1.1 Chapter Purpose and Scope</li>
+                    <li>X.1.2 Recap of Architectural Goals</li>
+                    <li>X.1.3 Chapter Structure Overview</li>
+                </ul>
+            </li>
+            <li>X.2 Technology Stack and Rationale
+                <ul>
+                    <li>X.2.1 Core Technology Selection</li>
+                    <li>X.2.2 Justification of Choices</li>
+                </ul>
+            </li>
+            <li>X.3 Foundational Layer: Physical Infrastructure and Virtualization
+                <ul>
+                    <li>X.3.1 Physical Server and Network Setup</li>
+                    <li>X.3.2 Proxmox VE Hypervisor Cluster Configuration</li>
+                    <li>X.3.3 Software-Defined Storage with Ceph</li>
+                    <li>X.3.4 Software-Defined Networking (SDN) and Security with OPNsense</li>
+                    <li>X.3.5 Configuring High Availability and System Resilience</li>
+                </ul>
+            </li>
+            <li>X.4 Container Orchestration Layer: High-Availability Kubernetes with k3s
+                <ul>
+                    <li>X.4.1 Automated Provisioning of Kubernetes Nodes with Terraform</li>
+                    <li>X.4.2 Configuration and Deployment of the HA k3s Cluster with Ansible</li>
+                    <li>X.4.3 On-Premises Service Exposure with MetalLB</li>
+                    <li>X.4.4 Application Lifecycle Management with Helm</li>
+                </ul>
+            </li>
+            <li>X.5 Monitoring, Management, and Automation Layer
+                <ul>
+                    <li>X.5.1 The Integrated IaC and Automation Workflow</li>
+                    <li>X.5.2 Cloud-Native Monitoring with Prometheus and Grafana</li>
+                    <li>X.5.3 System Maintenance and Backup Strategy</li>
+                </ul>
+            </li>
+            <li>X.6 Integrated System Workflow: A Deployment and Failure Scenario
+                <ul>
+                    <li>X.6.1 End-to-End Application Deployment</li>
+                    <li>X.6.2 Fault Tolerance in Action: A Node Failure Simulation</li>
+                </ul>
+            </li>
+            <li>X.7 Chapter Summary</li>
+        </ul>
+
+        <h2>X.1 Introduction</h2>
+        <h3>Purpose:</h3>
+        <p>Set the stage for the reader. State clearly that this chapter is about the "how" – the practical build process.</p>
+        <h3>Writing Strategy:</h3>
+        <blockquote>
+            <ul>
+                <li>Begin by referencing your architectural diagrams. "This chapter details the practical implementation of the multi-layered architecture presented in Chapter [Architecture Chapter #], translating the conceptual design into a functional, on-premises cloud platform."</li>
+                <li>Briefly restate your key research objectives that this implementation fulfills (e.g., "to build a resilient, automated, and observable private cloud environment using open-source technologies...").</li>
+                <li>Provide a roadmap: "The following sections will describe the setup of each layer, beginning with the Proxmox virtualization foundation, followed by the k3s container platform, and concluding with the automation and monitoring frameworks that integrate the system."</li>
+            </ul>
+        </blockquote>
+
+        <h2>X.2 Technology Stack and Rationale</h2>
+        <h3>Purpose:</h3>
+        <p>To demonstrate that your technology choices were deliberate and well-researched. This is critical for academic credibility.</p>
+        <h3>Writing Strategy:</h3>
+        <blockquote>
+            <ul>
+                <li>Use a table for clarity. This is highly effective for presenting this information concisely.</li>
+                <li>Follow the table with a paragraph elaborating on the synergistic relationship between <strong>Terraform and Ansible</strong> in your workflow (Terraform builds the "house," Ansible furnishes it).</li>
+            </ul>
+        </blockquote>
+        <table>
+            <thead>
+                <tr>
+                    <th>Layer / Function</th>
+                    <th>Technology Chosen</th>
+                    <th>Rationale / Justification</th>
+                    <th>Alternatives Considered (Briefly)</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>Virtualization</strong></td>
+                    <td>Proxmox VE</td>
+                    <td>Open-source, kernel-based (KVM), and integrates key features like HA, live migration, SDN, and Ceph storage management within a single platform.</td>
+                    <td>VMware vSphere, XCP-ng</td>
+                </tr>
+                <tr>
+                    <td><strong>Software-Defined Storage</strong></td>
+                    <td>Ceph</td>
+                    <td>Tightly integrated with Proxmox. Provides scalable, resilient, and unified block, file (CephFS), and object storage, crucial for a cloud-native environment.</td>
+                    <td>ZFS, GlusterFS</td>
+                </tr>
+                <tr>
+                    <td><strong>Network Firewall/Router</strong></td>
+                    <td>OPNsense</td>
+                    <td>A robust, open-source firewall and routing platform. Deployed as a VM, it provides flexible and powerful network management, including DHCP, DNS, and routing for the entire virtual environment.</td>
+                    <td>pfSense, VyOS</td>
+                </tr>
+                <tr>
+                    <td><strong>Container Orchestration</strong></td>
+                    <td>k3s</td>
+                    <td>A lightweight, certified Kubernetes distribution. Its low resource overhead and simplified HA setup make it ideal for on-premises deployments.</td>
+                    <td>Kubeadm, RKE2, MicroK8s</td>
+                </tr>
+                <tr>
+                    <td><strong>IaC (VM Provisioning)</strong></td>
+                    <td>Terraform</td>
+                    <td>Declarative syntax, a rich provider ecosystem (including a Proxmox provider), and state management capabilities enable repeatable and version-controlled infrastructure deployments.</td>
+                    <td>Manual UI, custom scripts</td>
+                </tr>
+                <tr>
+                    <td><strong>Config. Management</strong></td>
+                    <td>Ansible</td>
+                    <td>Agentless architecture, simple YAML syntax, and idempotent nature make it perfect for configuring operating systems and deploying complex applications like a HA k3s cluster.</td>
+                    <td>Puppet, Chef, SaltStack</td>
+                </tr>
+                <tr>
+                    <td><strong>K8s Load Balancer</strong></td>
+                    <td>MetalLB</td>
+                    <td>Essential for on-premises Kubernetes, providing the <code>LoadBalancer</code> service type to expose applications on the local network without requiring an external hardware load balancer.</td>
+                    <td>Ingress Controller only, external LB</td>
+                </tr>
+                <tr>
+                    <td><strong>Monitoring</strong></td>
+                    <td>Prometheus & Grafana</td>
+                    <td>The de facto standard for cloud-native monitoring. Prometheus offers a powerful pull-based model and query language (PromQL), while Grafana provides flexible and intuitive visualization.</td>
+                    <td>Zabbix, InfluxDB/Telegraf</td>
+                </tr>
+                <tr>
+                    <td><strong>K8s Packaging</strong></td>
+                    <td>Helm</td>
+                    <td>The standard Kubernetes package manager. Simplifies the deployment and management of complex applications through reusable, version-controlled charts.</td>
+                    <td>Kustomize, raw YAML files</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h2>X.3 Foundational Layer: Physical Infrastructure and Virtualization</h2>
+        <h3>Purpose:</h3>
+        <p>Describe the bedrock of your entire system, mapping directly to your implementation steps 1-12.</p>
+        <h3>Writing Strategy:</h3>
+        <blockquote>
+            <ul>
+                <li><strong>X.3.1 Physical Setup:</strong> Briefly describe the servers and the physical network switch.</li>
+                <li><strong>X.3.2 Proxmox Cluster:</strong> Detail the installation (Step 1) and how the nodes were formed into a cluster (Step 4). Mention the use of Open vSwitch (OVS) for advanced networking (Step 3).</li>
+                <li><strong>X.3.3 Software-Defined Storage with Ceph:</strong> Explain the disk partitioning strategy (Step 2) and the setup of the Ceph cluster for both block storage and file storage (CephFS) (Steps 3, 5).</li>
+                <li><strong>X.3.4 SDN and OPNsense:</strong> Describe the Proxmox SDN configuration (Step 8) and how the OPNsense VM was configured to manage the virtual network (Step 9). Mention the specific route you added as a concrete example of network integration: <pre><code>sudo ip route add 192.168.0.0/16 via 172.25.5.204</code></pre></li>
+                <li><strong>X.3.5 Configuring High Availability:</strong> Explain how Proxmox HA was configured (Step 10) and discuss the setup of live migration and the system backup strategy (Step 12).</li>
+            </ul>
+        </blockquote>
+
+        <h2>X.4 Container Orchestration Layer: High-Availability Kubernetes with k3s</h2>
+        <h3>Purpose:</h3>
+        <p>Detail the setup of the modern application platform, mapping to your steps 13-16.</p>
+        <h3>Writing Strategy:</h3>
+        <blockquote>
+            <ul>
+                <li><strong>X.4.1 Automated Provisioning with Terraform:</strong> Explain how you used Terraform with the Proxmox provider to automate the creation of the VMs (Step 13), using API keys for authentication (Step 11).</li>
+                <li><strong>X.4.2 Deployment of HA k3s with Ansible:</strong> Detail how you used the <code>techno-tim/k3s-ansible</code> playbook to deploy a three-node, HA control plane and two worker nodes (Steps 14, 15).</li>
+                <li><strong>X.4.3 On-Premises Service Exposure with MetalLB:</strong> Explain why MetalLB is necessary and describe its configuration.</li>
+                <li><strong>X.4.4 Application Lifecycle Management with Helm:</strong> Explain the role of Helm and mention its installation on a control node for cluster management (Step 16).</li>
+            </ul>
+        </blockquote>
+
+        <h2>X.5 Monitoring, Management, and Automation Layer</h2>
+        <h3>Purpose:</h3>
+        <p>Show how you made the system manageable, observable, and repeatable, mapping to step 17 and the overarching tools.</p>
+        <h3>Writing Strategy:</h3>
+        <blockquote>
+            <ul>
+                <li><strong>X.5.1 The Integrated IaC and Automation Workflow:</strong> Synthesize the roles of Terraform and Ansible to create a complete pipeline from bare metal to a running Kubernetes cluster.</li>
+                <li><strong>X.5.2 Cloud-Native Monitoring:</strong> Detail how you deployed Prometheus and Grafana onto the k3s cluster using a Helm chart (Step 17). Explain what is being monitored.</li>
+                <li><strong>X.5.3 System Maintenance and Backup Strategy:</strong> Reiterate the Proxmox backup configuration (Step 12) and discuss its importance for the virtualization layer.</li>
+            </ul>
+        </blockquote>
+
+        <h2>X.6 Integrated System Workflow: A Deployment and Failure Scenario</h2>
+        <h3>Purpose:</h3>
+        <p>To synthesize all the individual components and show they work together as a cohesive system. This is a high-impact section that proves your system works as designed.</p>
+        <h3>Writing Strategy:</h3>
+        <blockquote>
+            <ul>
+                <li><strong>Scenario 1: End-to-End Application Deployment:</strong> Use a narrative to describe deploying a new web application using your automated pipeline (Ansible, Helm, k3s, MetalLB) and observing it with Prometheus/Grafana.</li>
+                <li><strong>Scenario 2: Fault Tolerance in Action:</strong> Describe a simulation where a Proxmox host is powered off. Explain how Proxmox HA and the k3s scheduler work together to maintain service availability, demonstrating the resilience of your multi-layered HA architecture.</li>
+            </ul>
+        </blockquote>
+
+        <h2>X.7 Chapter Summary</h2>
+        <h3>Purpose:</h3>
+        <p>To briefly recap the accomplishments of the chapter and transition to the next.</p>
+        <h3>Writing Strategy:</h3>
+        <blockquote>
+            <ul>
+                <li>Summarize what you built: "This chapter has detailed the successful implementation of a fully-featured private cloud platform, from the physical hardware to the automated application layer."</li>
+                <li>Briefly list the key characteristics achieved: "The resulting system is highly available at both the virtualization (Proxmox HA) and container orchestration (k3s HA) layers, managed through a robust Infrastructure as Code pipeline (Terraform/Ansible), and fully observable via a cloud-native monitoring stack (Prometheus/Grafana)."</li>
+                <li>Look ahead: "With the system now constructed and its operational workflows defined, the following chapter will present the results of a series of experiments designed to quantitatively evaluate its performance, resilience, and operational efficiency under various loads and failure conditions."</li>
+            </ul>
+        </blockquote>
+
+    </div>
+
+</body>
+</html>
