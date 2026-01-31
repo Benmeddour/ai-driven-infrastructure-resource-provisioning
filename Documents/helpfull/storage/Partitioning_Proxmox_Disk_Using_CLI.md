@@ -4,7 +4,7 @@
 
 During the installation of Proxmox VE, you should set the installer option `hdsize` to define how much of the primary disk should be allocated to the Proxmox system. This ensures that free space is left unallocated for later use.
 
-![Harddisk options](https://github.com/Benmeddour/PFE2025-RSD/images/proxmox/Harddisk-options.png)
+![Harddisk options](../../../images/proxmox/Harddisk-options.png)
 
 Example:
 
