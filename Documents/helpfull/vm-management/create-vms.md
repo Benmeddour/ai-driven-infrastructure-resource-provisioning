@@ -19,7 +19,7 @@ Before proceeding, ensure the following:
      1. If the image is already downloaded to your local machine, click the `Upload` button and select the file.
      2. Alternatively, download the image directly from the web by clicking `Download from image`, entering the URL `https://cloud-images.ubuntu.com/noble/current/noble-server-cloudimg-amd64.img`, providing a name for the image, and clicking `Download`.
 
-   ![Upload the Image](../../../images/vm%20template/download%20the%20image.png)
+   ![Upload the Image](https://github.com/Benmeddour/PFE2025-RSD/images/vm%20template/download%20the%20image.png)
 
 2. **Create a New Virtual Machine**
 
@@ -28,11 +28,11 @@ Before proceeding, ensure the following:
    - Provide a name for the VM and configure the following:
      - **Name and ID:** Give the template a name and an ID.
      - **OS:** Do not use any media; select the option to proceed without it.
-       ![Select the OS](../../../images/vm%20template/Create-a-VM-without-any-ISO-media-in-Proxmox.png)
+       ![Select the OS](https://github.com/Benmeddour/PFE2025-RSD/images/vm%20template/Create-a-VM-without-any-ISO-media-in-Proxmox.png)
      - **System:** Configure BIOS, machine type, and other settings.
-       ![System Configuration](../../../images/vm%20template/check-the-quem-Agent-button-under-the-system-window.png)
+       ![System Configuration](https://github.com/Benmeddour/PFE2025-RSD/images/vm%20template/check-the-quem-Agent-button-under-the-system-window.png)
      - **Disks:** Allocate disk space for the VM.
-       ![Disk Configuration](../../../images/vm%20template/Create-a-VM-without-any-hard-disk-in-Proxmox.png)
+       ![Disk Configuration](https://github.com/Benmeddour/PFE2025-RSD/images/vm%20template/Create-a-VM-without-any-hard-disk-in-Proxmox.png)
      - **CPU:** Assign the number of cores. It is recommended to keep the default value.
      - **Memory:** Allocate RAM. It is recommended to keep the default value.
      - **Network:** Configure the network interface. It is recommended to keep the default value.
@@ -103,7 +103,7 @@ Before proceeding, ensure the following:
 
 3. **Customize the Cloud Image**
    - Use `cloud-init` to configure the VM with basic settings such as hostname, SSH keys, and network configuration. Then click `Regenerate Image`.
-     ![Cloud-init-customized](../../../images/vm%20template/cloud-init-customizition.png)
+     ![Cloud-init-customized](https://github.com/Benmeddour/PFE2025-RSD/images/vm%20template/cloud-init-customizition.png)
 
    - Start the VM and verify the configuration.
 
