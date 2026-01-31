@@ -18,12 +18,12 @@ Before starting the installation, ensure the following requirements are met:
 2. **Prepare Installation Media**
    Use a tool like [Rufus](https://rufus.ie/) to create a bootable USB drive with the Proxmox ISO.
 
-![Burn Proxmox to a USB Drive](../images/Beginning-the-Proxmox-installation.png)
+![Burn Proxmox to a USB Drive](../../../images/proxmox/Beginning-the-Proxmox-installation.png)
 
 3. **Boot from the Installation Media**
    Insert the bootable USB into the server and boot from it. Select the `Install Proxmox VE (Graphical)` option from the boot menu.
 
-![Proxmox Boot Menu](../images/Proxmox-install-summary-screen.png)
+![Proxmox Boot Menu](../../../images/proxmox/Proxmox-install-summary-screen.png)
 
 4. **Follow the Installation Wizard**
    Accept the End User License Agreement (EULA). Select the target storage device for the Proxmox installation. Configure the following:
@@ -31,29 +31,29 @@ Before starting the installation, ensure the following requirements are met:
    - **Administration Password and Email Address**
    - **Management Network Configuration**: Assign a static IP address, subnet mask, gateway, and DNS server.
 
-![Proxmox Management Network Configuration](../images/Configure-the-Proxmox-management-network.png)
+![Proxmox Management Network Configuration](../../../images/proxmox/Configure-the-Proxmox-management-network.png)
 
 5. **Complete the Installation**
    Review the configuration settings on the summary screen. Click the `Install` button to begin the installation process. By default, the system will automatically reboot after a successful installation.
 
-![Proxmox Installation Summary Screen](../images/Proxmox-install-summary-screen.png)
+![Proxmox Installation Summary Screen](../../../images/proxmox/Proxmox-install-summary-screen.png)
 
 6. **Access the Proxmox Web Interface**
    After the Proxmox VE Server reboots, it will display the GRUB startup screen below, giving you the option to boot into diagnostics modes or boot normally.
 
-![First boot of Proxmox VE Server](../images/First-boot-of-Proxmox-VE-Server.png)
+![First boot of Proxmox VE Server](../../../images/proxmox/First-boot-of-Proxmox-VE-Server.png)
 
 Once the server boots, it will boot to the terminal console displayed below. The terminal console will display the URL for accessing the web GUI. Note the special port that Proxmox VE Server uses for the web admin console, port 8006.
 
-![Viewing the Promxox server command line console](../images/Viewing-the-Promxox-server-command-line-console.png)
+![Viewing the Promxox server command line console](../../../images/proxmox/Viewing-the-Promxox-server-command-line-console.png)
 
 After you launch a browser and browse to the URL displayed in the terminal console, you will be prompted to log into the Proxmox VE Server. Here, you will use `root` and the password you configured during the installation of Proxmox VE Server.
 
-![Logging in to the Proxmox web interface](../images/Logging-in-to-the-Proxmox-web-interface.png)
+![Logging in to the Proxmox web interface](../../../images/proxmox/Logging-in-to-the-Proxmox-web-interface.png)
 
 Once you log in to the Proxmox VE web interface, you will see the default dashboard displayed for Proxmox. You will see your node listed under the **Datacenter** node. From the main dashboard, you will see various menus that will display relative to the context of where you have clicked in the left-hand pane.
 
-![Proxmox Web Interface Dashboard](../images/The-Proxmox-web-interface-dashboard.png)
+![Proxmox Web Interface Dashboard](../../../images/proxmox/The-Proxmox-web-interface-dashboard.png)
 
 ## Troubleshooting
 
