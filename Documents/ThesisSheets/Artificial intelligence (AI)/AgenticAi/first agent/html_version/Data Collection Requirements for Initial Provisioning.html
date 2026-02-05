@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Data Collection Requirements for Initial Provisioning</title>
+    <style>
+      body {
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+          Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji",
+          "Segoe UI Symbol";
+        line-height: 1.6;
+        color: #333;
+        max-width: 950px;
+        margin: 20px auto;
+        padding: 0 20px;
+        background-color: #fdfdfd;
+      }
+
+      h1,
+      h2,
+      h3 {
+        color: #2c3e50;
+        border-bottom: 2px solid #ecf0f1;
+        padding-bottom: 10px;
+        margin-top: 40px;
+      }
+
+      h1 {
+        text-align: center;
+        border-bottom: 3px solid #16a085;
+      }
+
+      h2 .subtitle {
+        display: block;
+        font-size: 0.8em;
+        color: #7f8c8d;
+        font-weight: normal;
+        margin-top: 5px;
+      }
+
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 20px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08);
+      }
+
+      th,
+      td {
+        padding: 12px 15px;
+        text-align: left;
+        border: 1px solid #ddd;
+      }
+
+      th {
+        background-color: #16a085;
+        color: white;
+        font-weight: bold;
+      }
+
+      tr:nth-child(even) {
+        background-color: #f8f9fa;
+      }
+
+      code {
+        background-color: #ecf0f1;
+        padding: 3px 6px;
+        border-radius: 4px;
+        font-family: "Courier New", Courier, monospace;
+        color: #c0392b;
+      }
+
+      .introduction {
+        background-color: #e8f8f5;
+        border: 1px solid #a3e4d7;
+        padding: 20px;
+        border-radius: 5px;
+        margin-bottom: 40px;
+      }
+
+      ul {
+        list-style-type: square;
+        padding-left: 20px;
+        margin-top: 10px;
+      }
+
+      li {
+        margin-bottom: 8px;
+      }
+    </style>
+  </head>
+
+  <body>
+    <h1>Data Collection Requirements for Initial Provisioning</h1>
+
+    <div class="introduction">
+      <p>
+        This document outlines the essential data required by the AI agent to
+        perform an <strong>Initial Provisioning</strong> task. The goal is to
+        make the best possible initial resource allocation for a new application
+        that has no performance history in our environment.
+      </p>
+      <p>
+        Collecting this data is critical to ground the agent's decisions in
+        reality, helping to avoid the two most common deployment failures:
+      </p>
+      <ul>
+        <li>
+          <strong>Under-provisioning:</strong> Causing the application to crash
+          immediately upon startup (e.g., OOMKilled).
+        </li>
+        <li>
+          <strong>Gross Over-provisioning:</strong> Wasting significant cluster
+          resources from day one.
+        </li>
+      </ul>
+    </div>
+
+    <h2>
+      I. Cluster State & Capacity
+      <span class="subtitle">"Where can this new app go?"</span>
+    </h2>
+    <p>
+      This data provides a snapshot of the infrastructure's current state and
+      capabilities. It is used to determine <em>if</em> and <em>where</em> a new
+      application can be safely placed.
+    </p>
+
+    <h3>A. Proxmox Cluster Information</h3>
+    <table>
+      <thead>
+        <tr>
+          <th>Data Point</th>
+          <th>Why It's Needed for Initial Provisioning</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Cluster & Node Status</strong></td>
+          <td>
+            <strong>To ensure reliability.</strong> The agent must confirm which
+            nodes are <code>online</code> and that the cluster has quorum.
+            Attempting to deploy to an offline node or an unhealthy cluster
+            would result in immediate failure. This is a fundamental sanity
+            check.
+          </td>
+        </tr>
+        <tr>
+          <td><strong>Node-Level Capacity</strong></td>
+          <td>
+            <strong>To find a suitable host.</strong> The agent needs to know
+            the total and <em>available</em> CPU and RAM on each node. It
+            compares its estimated resource needs for the new VM against this
+            data to identify nodes that can physically accommodate the workload.
+          </td>
+        </tr>
+        <tr>
+          <td><strong>Storage Pools</strong></td>
+          <td>
+            <strong>To provision storage.</strong> A new VM requires a disk. The
+            agent must know which storage pools exist (e.g.,
+            <code>local-lvm</code>, <code>cephfs</code>), their types, and their
+            available space to ensure the VM's virtual disk can be created
+            successfully.
+          </td>
+        </tr>
+        <tr>
+          <td><strong>Available Templates & Images</strong></td>
+          <td>
+            <strong>To validate the user's request.</strong> If a user asks to
+            "clone template <code>9001</code>" or "use
+            <code>ubuntu-22.04.iso</code>," the agent must first verify that
+            this template or ISO actually exists. This prevents errors from
+            typos or incorrect names.
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h3>B. Kubernetes (K8s) Cluster Information</h3>
+    <table>
+      <thead>
+        <tr>
+          <th>Data Point</th>
+          <th>Why It's Needed for Initial Provisioning</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Node Status & Capacity</strong></td>
+          <td>
+            <strong>To ensure schedulability.</strong> The agent must know which
+            nodes are in a <code>Ready</code> state and their
+            <code>allocatable</code> resources. This allows the Kubernetes
+            scheduler to find a home for the new pod(s).
+          </td>
+        </tr>
+        <tr>
+          <td><strong>Resource Constraints</strong></td>
+          <td>
+            <strong>To respect guardrails.</strong> The agent must be aware of
+            <code>ResourceQuotas</code> and <code>LimitRanges</code>. Its
+            recommendations must comply with these rules; otherwise, the
+            deployment will be rejected by the Kubernetes API server.
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <strong>Available <code>StorageClasses</code></strong>
+          </td>
+          <td>
+            <strong>To enable persistence.</strong> If the new application is
+            stateful (e.g., a database), the agent needs to know the available
+            <code>StorageClasses</code> to generate a valid
+            <code>PersistentVolumeClaim</code> manifest.
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h2>
+      II. Cluster-Wide Load
+      <span class="subtitle">"How busy is the environment right now?"</span>
+    </h2>
+    <p>
+      Understanding the current load on the cluster is vital for performance and
+      stability, even without metrics for the new application itself.
+    </p>
+    <table>
+      <thead>
+        <tr>
+          <th>Data Point</th>
+          <th>Why It's Needed for Initial Provisioning</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Proxmox Node Metrics (CPU/RAM)</strong></td>
+          <td>
+            <strong>To choose the <em>least stressed</em> node.</strong> A node
+            might have available capacity on paper but be under heavy real-time
+            load. The agent uses this data to place the new VM on the healthiest
+            node, ensuring better performance for everyone.
+          </td>
+        </tr>
+        <tr>
+          <td><strong>K8s Node Pressure Conditions</strong></td>
+          <td>
+            <strong>To avoid problematic nodes.</strong> The agent checks for
+            conditions like <code>MemoryPressure</code> or
+            <code>DiskPressure</code>. This prevents placing new pods on nodes
+            that are already struggling, which could lead to instability.
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <!--<h2>III. Application Repository Analysis <span class="subtitle">"What is this new app?"</span></h2>
+        <p>For a new application, its source code is the <strong>single most valuable source of information</strong>. Analyzing the repository allows the agent to make specific, data-driven recommendations instead of generic guesses.</p>
+        <table>
+            <thead>
+                <tr>
+                    <th>Data Point</th>
+                    <th>Why It's Needed for Initial Provisioning</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>Automated Tech Stack Detection</strong></td>
+                    <td><strong>To use accurate heuristics.</strong> Identifying the stack (e.g., Python/FastAPI vs. Go/Gin) is crucial. A Java application has vastly different memory requirements than a Go application. This knowledge allows the agent to
+                        apply the correct resource estimation model.</td>
+                </tr>
+                <tr>
+                    <td><strong>Dockerfile Parsing</strong></td>
+                    <td>
+                        <strong>To automate configuration.</strong> The <code>Dockerfile</code> is a goldmine for critical details:
+                        <ul>
+                            <li><strong>Base Image:</strong> An app built on <code>alpine</code> will have a much smaller footprint than one on <code>ubuntu:22.04</code>.</li>
+                            <li><strong>Exposed Ports:</strong> The <code>EXPOSE</code> instruction directly reveals the <code>containerPort</code> needed for a Kubernetes service, eliminating guesswork.</li>
+                        </ul>
+                    </td>
+                </tr>
+                <tr>
+                    <td><strong>Dependency Analysis</strong></td>
+                    <td>
+                        <strong>To understand resource needs and the full ecosystem.</strong> Files like <code>requirements.txt</code> or <code>package.json</code> reveal dependencies:
+                        <ul>
+                            <li>An app with <code>tensorflow</code> needs significant RAM and maybe a GPU.</li>
+                            <li>An app with <code>imagemagick</code> suggests CPU-intensive image processing.</li>
+                            <li>A database driver (like <code>psycopg2</code>) confirms it needs to connect to a database.</li>
+                        </ul>
+                    </td>
+                </tr>
+                <tr>
+                    <td><strong>Extracting Configuration Defaults</strong></td>
+                    <td><strong>To reduce manual effort.</strong> Files like <code>.env.example</code> or <code>docker-compose.yml</code> often contain default settings (worker threads, cache sizes) that the agent can use to pre-populate the deployment manifest
+                        for a more complete and accurate configuration.</td>
+                </tr>
+            </tbody>
+        </table>
+        -->
+  </body>
+</html>

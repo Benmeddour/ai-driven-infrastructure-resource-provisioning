@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Examples of `required_configurations` Implementations</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+            line-height: 1.6;
+            color: #34495e;
+            max-width: 950px;
+            margin: 20px auto;
+            padding: 0 20px;
+            background-color: #f8f9fa;
+        }
+        h1, h2, h3 {
+            color: #2c3e50;
+            border-bottom: 2px solid #ecf0f1;
+            padding-bottom: 10px;
+            margin-top: 40px;
+        }
+        h1 {
+            text-align: center;
+            border-bottom: 3px solid #8e44ad;
+            font-size: 2.5em;
+        }
+        h2 {
+            font-size: 1.8em;
+        }
+        .introduction {
+            background-color: #f5eef8;
+            border: 1px solid #d7bde2;
+            padding: 25px;
+            border-radius: 8px;
+            margin-bottom: 40px;
+            font-size: 1.1em;
+        }
+        .example-card {
+            background-color: #ffffff;
+            border: 1px solid #e5e7e9;
+            border-left: 5px solid #9b59b6;
+            padding: 20px 25px;
+            margin-top: 25px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+        }
+        pre {
+            background-color: #2c3e50;
+            color: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            overflow-x: auto;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+            font-size: 0.9em;
+        }
+        pre .comment {
+            color: #7f8c8d;
+            font-style: italic;
+        }
+        code {
+            background-color: #ecf0f1;
+            padding: 4px 7px;
+            border-radius: 4px;
+            font-family: "Courier New", Courier, monospace;
+            color: #c0392b;
+            font-size: 0.95em;
+        }
+        .location-note {
+            font-style: italic;
+            color: #555;
+            margin-top: 10px;
+            padding-left: 15px;
+            border-left: 3px solid #bdc3c7;
+        }
+        strong {
+            color: #8e44ad;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Examples of <code>required_configurations</code> Implementations</h1>
+
+    <div class="introduction">
+        <p>This document provides concrete YAML examples for each directive that Agent 2 might place on the <code>required_configurations</code> checklist. These examples illustrate what <strong>Agent 3 (The Builder)</strong> would generate as part of its final manifest creation process.</p>
+    </div>
+
+    <div class="example-card">
+        <h2>1. Directive: <code>liveness_probe</code></h2>
+        <p><strong>When Agent 2 adds this:</strong> When it identifies a long-running service like a web API that could potentially hang or deadlock.</p>
+        <p><strong>Generated YAML by Agent 3:</strong></p>
+        <pre><code>
+<span class="comment"># This snippet would be added inside the `container` spec of a Kubernetes Deployment.</span>
+livenessProbe:
+  httpGet:
+    path: /healthz
+    port: 8080
+  initialDelaySeconds: 15
+  periodSeconds: 20
+  timeoutSeconds: 5
+  failureThreshold: 3
+        </code></pre>
+    </div>
+
+    <div class="example-card">
+        <h2>2. Directive: <code>readiness_probe</code></h2>
+        <p><strong>When Agent 2 adds this:</strong> For applications that have a startup time (e.g., connecting to a database, loading a model) and shouldn't receive traffic immediately.</p>
+        <p><strong>Generated YAML by Agent 3:</strong></p>
+        <pre><code>
+<span class="comment"># This snippet would also be added inside the `container` spec.</span>
+readinessProbe:
+  httpGet:
+    path: /ready
+    port: 8080
+  initialDelaySeconds: 5
+  periodSeconds: 10
+        </code></pre>
+    </div>
+
+    <div class="example-card">
+        <h2>3. Directive: <code>persistent_storage_claim</code></h2>
+        <p><strong>When Agent 2 adds this:</strong> When it identifies a stateful application like "PostgreSQL", "MongoDB", or any workload that needs to persist data.</p>
+        <p><strong>Generated YAML by Agent 3 (This is a two-part generation):</strong></p>
+        <p>First, Agent 3 creates a separate <code>PersistentVolumeClaim</code> object:</p>
+        <pre><code>
+<span class="comment"># A top-level Kubernetes object.</span>
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: my-app-pvc
+spec:
+  accessModes:
+    - ReadWriteOnce
+  storageClassName: ceph-rbd
+  resources:
+    requests:
+      storage: 10Gi
+        </code></pre>
+        <p>Second, it mounts this claim into the Deployment:</p>
+        <pre><code>
+<span class="comment"># Snippets added to the Deployment's `template.spec`.</span>
+spec:
+  containers:
+  - name: my-app
+    volumeMounts:
+    - name: my-app-storage
+      mountPath: /data
+  volumes:
+  - name: my-app-storage
+    persistentVolumeClaim:
+      claimName: my-app-pvc
+        </code></pre>
+    </div>
+
+    <div class="example-card">
+        <h2>4. Directive: <code>service_exposure</code></h2>
+        <p><strong>When Agent 2 adds this:</strong> For any application that needs to be accessible over the network by other services within the cluster.</p>
+        <p><strong>Generated YAML by Agent 3:</strong></p>
+        <pre><code>
+<span class="comment"># A top-level Kubernetes object.</span>
+apiVersion: v1
+kind: Service
+metadata:
+  name: my-app-service
+spec:
+  type: ClusterIP
+  selector:
+    app: my-app <span class="comment"># This must match the labels on the pods.</span>
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 8080 <span class="comment"># This is the port the container listens on.</span>
+        </code></pre>
+    </div>
+
+    <div class="example-card">
+        <h2>5. Directive: <code>high_availability_rules</code></h2>
+        <p><strong>When Agent 2 adds this:</strong> When the user explicitly requests "high availability" or it's inferred for a critical production service with multiple replicas.</p>
+        <p><strong>Generated YAML by Agent 3:</strong></p>
+        <pre><code>
+<span class="comment"># This snippet is added to the Deployment's `template.spec`.</span>
+spec:
+  affinity:
+    podAntiAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+      - labelSelector:
+          matchExpressions:
+          - key: app
+            operator: In
+            values:
+            - my-app
+        topologyKey: "kubernetes.io/hostname"
+        </code></pre>
+        <p class="location-note">This rule tells Kubernetes to avoid scheduling two pods with the label <code>app: my-app</code> on the same physical node.</p>
+    </div>
+
+    <div class="example-card">
+        <h2>6. Directive: <code>configmap_mount</code></h2>
+        <p><strong>When Agent 2 adds this:</strong> When an application likely needs non-sensitive configuration, promoting good Twelve-Factor App principles.</p>
+        <p><strong>Generated YAML by Agent 3 (Two-part generation):</strong></p>
+        <p>First, the <code>ConfigMap</code> object:</p>
+        <pre><code>
+<span class="comment"># A top-level Kubernetes object.</span>
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: my-app-config
+data:
+  API_URL: "https://api.external.com/v1"
+  FEATURE_FLAG_BETA: "true"
+        </code></pre>
+        <p>Second, mounting the data as environment variables in the Deployment:</p>
+        <pre><code>
+<span class="comment"># This snippet is added inside the `container` spec.</span>
+envFrom:
+- configMapRef:
+    name: my-app-config
+        </code></pre>
+    </div>
+
+    <div class="example-card">
+        <h2>7. Directive: <code>secret_mount</code></h2>
+        <p><strong>When Agent 2 adds this:</strong> When an application needs sensitive data, such as a database password, inferred from its dependencies.</p>
+        <p><strong>Generated YAML by Agent 3 (Two-part generation):</strong></p>
+        <p>First, the <code>Secret</code> object (note that data is base64 encoded):</p>
+        <pre><code>
+<span class="comment"># A top-level Kubernetes object.</span>
+apiVersion: v1
+kind: Secret
+metadata:
+  name: my-app-secrets
+type: Opaque
+data:
+  DATABASE_PASSWORD: cGFzc3dvcmQxMjM= <span class="comment"># "password123" base64 encoded</span>
+  API_KEY: Z2hpa2xtbm9wcXJzdHV2dw==
+        </code></pre>
+        <p>Second, mounting the secrets as environment variables in the Deployment:</p>
+        <pre><code>
+<span class="comment"># This snippet is added inside the `container` spec.</span>
+envFrom:
+- secretRef:
+    name: my-app-secrets
+        </code></pre>
+    </div>
+
+</body>
+</html>

@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agent 2 Architecture: The Pragmatic Analysis Pipeline</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+            line-height: 1.6;
+            color: #34495e;
+            max-width: 950px;
+            margin: 20px auto;
+            padding: 0 20px;
+            background-color: #f8f9fa;
+        }
+        h1, h2, h3, h4 {
+            color: #2c3e50;
+            border-bottom: 2px solid #ecf0f1;
+            padding-bottom: 10px;
+            margin-top: 40px;
+        }
+        h1 {
+            text-align: center;
+            border-bottom: 3px solid #27ae60;
+            font-size: 2.5em;
+        }
+        h2 {
+            font-size: 1.8em;
+        }
+        h3 {
+            font-size: 1.4em;
+            border-bottom: none;
+            display: flex;
+            align-items: center;
+        }
+        h4 {
+            font-size: 1.2em;
+            border-bottom: 1px dashed #bdc3c7;
+            margin-top: 30px;
+        }
+        h3 .icon {
+            font-size: 1.5em;
+            margin-right: 15px;
+            color: #27ae60;
+        }
+        .introduction {
+            background-color: #e8f8f5;
+            border: 1px solid #a3e4d7;
+            padding: 25px;
+            border-radius: 8px;
+            margin-bottom: 40px;
+            font-size: 1.1em;
+        }
+        .workflow-step {
+            background-color: #ffffff;
+            border: 1px solid #e5e7e9;
+            border-left: 5px solid #2ecc71;
+            padding: 20px 25px;
+            margin-top: 25px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+        }
+        code {
+            background-color: #ecf0f1;
+            padding: 4px 7px;
+            border-radius: 4px;
+            font-family: "Courier New", Courier, monospace;
+            color: #c0392b;
+            font-size: 0.95em;
+        }
+        ul, ol {
+            padding-left: 25px;
+        }
+        li {
+            margin-bottom: 10px;
+        }
+        strong {
+            color: #219a52;
+        }
+        .fallback-section {
+            background-color: #fef9e7;
+            border-left: 5px solid #f1c40f;
+            margin-top: 20px;
+            padding: 15px;
+        }
+        .fallback-section h4 .icon {
+            color: #f1c40f;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Agent 2 Architecture: The Pragmatic Analysis Pipeline</h1>
+
+    <div class="introduction">
+        <p>This document specifies the definitive architecture for <strong>Agent 2</strong>. The design prioritizes reliability and maintainability by using a <strong>restricted set of deterministic tools</strong> for repository analysis, coupled with a <strong>robust fallback mechanism</strong>. This ensures predictable results and avoids the complexity of supporting every possible technology stack from day one.</p>
+    </div>
+
+    <h2>The Analysis Pipeline: A Tool-Driven Workflow</h2>
+
+    <ol>
+        <li class="workflow-step">
+            <h3><span class="icon">📥</span> Step 1: Context Ingestion & Path Determination</h3>
+            <p>The agent ingests the full JSON payload from Agent 1. It immediately checks if the <code>application_context.repository_url</code> is present. If it is, the agent proceeds to the repository analysis step. If not, it skips directly to Step 3, relying solely on the user's chat for analysis.</p>
+        </li>
+
+        <li class="workflow-step">
+            <h3><span class="icon">🛠️</span> Step 2: Application Profile Synthesis via Restricted Tools</h3>
+            <p>This is the central analysis step when a repository is provided. The agent executes a precise, limited sub-process:</p>
+            <ol>
+                <li><strong>Dynamic Git Clone:</strong> A tool clones the specified repository URL into a temporary, secure directory.</li>
+                <li><strong>Core File Scan:</strong> It scans the directory for a small, high-value set of supported files: <code>Dockerfile</code>, <code>requirements.txt</code>, and <code>package.json</code>.</li>
+                <li><strong>Execute Core Parsers:</strong> For each supported file found, the agent invokes its corresponding deterministic parser to extract structured facts.</li>
+                <li><strong>Aggregate Facts:</strong> The agent collects the JSON outputs from all successful parsers into a single "facts" object.</li>
+            </ol>
+            
+            <div class="fallback-section">
+                <h4><span class="icon">🔄</span> Graceful Fallback Logic (Critical)</h4>
+                <p>If the scan finds a <code>Dockerfile</code> but <strong>no supported dependency file</strong> (e.g., it's a Java project with a <code>pom.xml</code>), the agent <strong>does not fail</strong>. It simply proceeds with the facts it could gather (from the Dockerfile) and moves to the next step. This resilience is a core design feature.</p>
+            </div>
+        </li>
+
+        <li class="workflow-step">
+            <h3><span class="icon">📊</span> Step 3: Infrastructure Constraint Analysis</h3>
+            <p>This "reality check" is always performed. The agent analyzes the provided infrastructure state (Proxmox or Kubernetes) to check for resource availability, policy compliance, and storage feasibility, ensuring its final recommendations are realistic.</p>
+        </li>
+
+        <li class="workflow-step">
+            <h3><span class="icon">📝</span> Step 4: Strategic Synthesis with LLM</h3>
+            <p>In the final step, the LLM acts as a synthesis engine. It is prompted with all available information:</p>
+            <ul>
+                <li>The user's original request (<code>request_details</code>).</li>
+                <li>The structured "facts" object from the tool-based analysis (which may be empty or partially complete).</li>
+                <li>The current infrastructure state (<code>infrastructure_state</code>).</li>
+            </ul>
+            <p>The LLM reasons over these concrete inputs to produce the final "Strategic Plan" JSON. Crucially, its <code>reasoning_summary</code> will explicitly state the basis of its analysis (e.g., "Based on deep analysis of the Python application..." vs. "Based on a heuristic analysis of the user's request..."), ensuring full traceability.</p>
+        </li>
+    </ol>
+
+</body>
+</html>

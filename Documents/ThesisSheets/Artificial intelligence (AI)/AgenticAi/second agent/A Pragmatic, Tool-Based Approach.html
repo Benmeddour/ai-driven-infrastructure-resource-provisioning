@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agent 2 Architecture: A Pragmatic, Tool-Based Approach</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+            line-height: 1.6;
+            color: #34495e;
+            max-width: 950px;
+            margin: 20px auto;
+            padding: 0 20px;
+            background-color: #f8f9fa;
+        }
+        h1, h2, h3 {
+            color: #2c3e50;
+            border-bottom: 2px solid #ecf0f1;
+            padding-bottom: 10px;
+            margin-top: 40px;
+        }
+        h1 {
+            text-align: center;
+            border-bottom: 3px solid #27ae60;
+            font-size: 2.5em;
+        }
+        h2 {
+            font-size: 1.8em;
+        }
+        h3 {
+            font-size: 1.4em;
+            border-bottom: none;
+            display: flex;
+            align-items: center;
+        }
+        h3 .icon {
+            font-size: 1.5em;
+            margin-right: 15px;
+            color: #27ae60;
+        }
+        .introduction {
+            background-color: #e8f8f5;
+            border: 1px solid #a3e4d7;
+            padding: 25px;
+            border-radius: 8px;
+            margin-bottom: 40px;
+            font-size: 1.1em;
+        }
+        .tool-card {
+            background-color: #ffffff;
+            border: 1px solid #e5e7e9;
+            border-left: 5px solid #2ecc71;
+            padding: 20px 25px;
+            margin-top: 25px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        th, td {
+            padding: 12px 15px;
+            text-align: left;
+            border: 1px solid #ddd;
+        }
+        th {
+            background-color: #2c3e50;
+            color: white;
+            font-weight: bold;
+        }
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+        code {
+            background-color: #ecf0f1;
+            padding: 4px 7px;
+            border-radius: 4px;
+            font-family: "Courier New", Courier, monospace;
+            color: #c0392b;
+            font-size: 0.95em;
+        }
+        strong {
+            color: #219a52;
+        }
+        .fallback-section {
+            background-color: #fef9e7;
+            border-left: 5px solid #f1c40f;
+        }
+        .fallback-section .icon {
+            color: #f1c40f;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Agent 2 Architecture: A Pragmatic, Tool-Based Approach</h1>
+
+    <div class="introduction">
+        <p>This document specifies the complete and final architecture for <strong>Agent 2</strong>. The design philosophy is to use a <strong>pragmatic, restricted set of deterministic tools</strong> for data extraction, ensuring reliability and maintainability. This approach avoids the complexity of supporting every possible file type by focusing on a core set of parsers and implementing a robust fallback mechanism.</p>
+    </div>
+
+    <h2>I. The Git Repository Toolkit</h2>
+    <div class="tool-card">
+        <h3><span class="icon">📂</span> Git Interface & File Scanner</h3>
+        <p>This tool is invoked only if a <code>repository_url</code> is present in the input payload. It performs two critical, sequential functions:</p>
+        <ol>
+            <li><strong>Dynamic Git Clone:</strong> It takes the repository URL as an argument and clones it into a temporary, isolated filesystem. This function is designed to handle any valid Git URL provided at runtime.</li>
+            <li><strong>Key File Discovery:</strong> After cloning, it scans the repository's root directory for the predefined list of "core supported" filenames (see below) and returns a list of paths to the files that were found.</li>
+        </ol>
+    </div>
+
+    <h2>II. The Deterministic Parser Toolkit</h2>
+    <p>This is the core of the application analysis. The agent uses a small, powerful set of parsers for the most common and high-value file types.</p>
+    
+    <div class="tool-card">
+        <h3><span class="icon">🛠️</span> Mandatory Parser: The Dockerfile</h3>
+        <p>The <code>Dockerfile</code> is the most critical file for containerized provisioning. Its parser is non-negotiable and provides foundational context.</p>
+        <table>
+            <thead><tr><th>Tool Name</th><th>Input</th><th>Example JSON Output</th></tr></thead>
+            <tbody>
+                <tr>
+                    <td><strong>parse_dockerfile</strong></td>
+                    <td>Content of a <code>Dockerfile</code>.</td>
+                    <td><code>{"base_image": "python:3.10-slim", "exposed_port": 8000}</code></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="tool-card">
+        <h3><span class="icon">🛠️</span> Supported Dependency Parsers</h3>
+        <p>To start, we will support the dependency files for the most common web and backend development ecosystems.</p>
+        <table>
+            <thead><tr><th>Tool Name</th><th>Input</th><th>Example JSON Output</th></tr></thead>
+            <tbody>
+                <tr>
+                    <td><strong>parse_requirements_txt</strong></td>
+                    <td>Content of a <code>requirements.txt</code> file.</td>
+                    <td><code>{"language": "Python", "dependencies": ["fastapi", "uvicorn", "psycopg2-binary"]}</code></td>
+                </tr>
+                <tr>
+                    <td><strong>parse_package_json</strong></td>
+                    <td>Content of a <code>package.json</code> file.</td>
+                    <td><code>{"language": "JavaScript/TypeScript", "dependencies": ["express", "redis", "axios"]}</code></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    
+    <div class="tool-card fallback-section">
+        <h3><span class="icon">🔄</span> The Graceful Fallback Mechanism (Critical)</h3>
+        <p>This is the most important part of the restricted standard. It defines how the agent behaves when it encounters a repository with an unsupported dependency format (e.g., a Java <code>pom.xml</code>, a Rust <code>Cargo.toml</code>).</p>
+        <p>The agent's workflow is as follows:</p>
+        <ol>
+            <li>Scan the repository for all core supported files.</li>
+            <li>If a <code>Dockerfile</code> is found, parse it.</li>
+            <li>If one of the supported dependency files is found, parse it.</li>
+            <li><strong>If no supported dependency file is found, the agent does not fail.</strong> Instead, it proceeds with its analysis using only the information it could gather (e.g., from the <code>Dockerfile</code>) and the user's original chat message.</li>
+            <li>In its final output, the agent's <code>reasoning_summary</code> will <strong>explicitly state that its analysis was heuristic</strong> because the specific tech stack was not part of the core supported parsers.</li>
+        </ol>
+        <p>This fallback ensures the system is <strong>resilient and always produces a valid, if more generic, plan</strong>, rather than crashing on an unfamiliar project type.</p>
+    </div>
+
+    <h2>III. The Synthesis Engine</h2>
+    <div class="tool-card">
+        <h3><span class="icon">🧠</span> LLM as a Strategic Reasoner</h3>
+        <p>The LLM is the final and most powerful tool in the agent's arsenal. Crucially, it is not used for data extraction. Instead, it acts as a synthesis engine that reasons over the structured facts provided by the other tools.</p>
+        <p>Its prompt is constructed with:</p>
+        <ul>
+            <li>The user's original request and extracted parameters.</li>
+            <li>The structured JSON output from the file parsers (if any).</li>
+            <li>The structured JSON describing the current state of the infrastructure.</li>
+        </ul>
+        <p>Based on this clean, factual input, the LLM is tasked with one job: to generate the final "Strategic Plan" JSON object, including resource recommendations, deployment strategy, and a clear reasoning summary.</p>
+    </div>
+
+</body>
+</html>

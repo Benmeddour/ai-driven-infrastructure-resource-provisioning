@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agent 3 Output Specification: The Deployable Artifact</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+            line-height: 1.6;
+            color: #34495e;
+            max-width: 950px;
+            margin: 20px auto;
+            padding: 0 20px;
+            background-color: #f8f9fa;
+        }
+        h1, h2, h3 {
+            color: #2c3e50;
+            border-bottom: 2px solid #ecf0f1;
+            padding-bottom: 10px;
+            margin-top: 40px;
+        }
+        h1 {
+            text-align: center;
+            border-bottom: 3px solid #8e44ad;
+            font-size: 2.5em;
+        }
+        h2 {
+            font-size: 1.8em;
+        }
+        h3 {
+            font-size: 1.4em;
+            border-bottom: none;
+            display: flex;
+            align-items: center;
+        }
+        h3 .icon {
+            font-size: 1.5em;
+            margin-right: 15px;
+            color: #8e44ad;
+        }
+        .introduction {
+            background-color: #f5eef8;
+            border: 1px solid #d7bde2;
+            padding: 25px;
+            border-radius: 8px;
+            margin-bottom: 40px;
+            font-size: 1.1em;
+        }
+        .section {
+            background-color: #ffffff;
+            border: 1px solid #e5e7e9;
+            border-left: 5px solid #9b59b6;
+            padding: 20px 25px;
+            margin-top: 25px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+        }
+        pre {
+            background-color: #2c3e50;
+            color: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            overflow-x: auto;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+            font-size: 0.9em;
+        }
+        pre .comment {
+            color: #7f8c8d;
+            font-style: italic;
+        }
+        code {
+            background-color: #ecf0f1;
+            padding: 4px 7px;
+            border-radius: 4px;
+            font-family: "Courier New", Courier, monospace;
+            color: #c0392b;
+            font-size: 0.95em;
+        }
+        strong {
+            color: #8e44ad;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Agent 3 Output Specification: The Deployable Artifact</h1>
+
+    <div class="introduction">
+        <p>The final output of <strong>Agent 3</strong> is the culmination of the entire multi-agent workflow. It is not just a file, but a complete, validated, and production-ready <strong>"Deployable Artifact Package"</strong>. This package contains one or more configuration files that are ready to be passed directly to an execution engine (like <code>kubectl</code>) or committed to a GitOps repository.</p>
+    </div>
+
+    <div class="section">
+        <h3><span class="icon">📄</span> Core Characteristics of the Output</h3>
+        <ul>
+            <li><strong>Completeness:</strong> The output includes all necessary components. For a Kubernetes application, this means not just the <code>Deployment</code>, but also any required <code>Service</code>, <code>ConfigMap</code>, <code>Secret</code>, or <code>PersistentVolumeClaim</code> objects.</li>
+            <li><strong>Best Practices Embodied:</strong> The artifact is not merely functional. Thanks to the ReAct Refinement Loop, it incorporates best practices for security, availability, and observability (e.g., probes, affinity rules, resource limits).</li>
+            <li><strong>Platform-Specific:</strong> The format of the artifact is tailored to the <code>platform_target</code> identified in the strategic plan. For Kubernetes, this will be one or more YAML manifests. For Proxmox, this could be a set of API parameters for creation or a script to execute.</li>
+            <li><strong>Traceability:</strong> While not part of the YAML itself, the agent's execution log provides a clear trace of how each section of the artifact was constructed during the ReAct loop, linking back to the directives from Agent 2.</li>
+        </ul>
+    </div>
+
+    <h2>Example Output Package: Kubernetes YAML</h2>
+    <p>This example shows the complete YAML output Agent 3 would produce for a stateful web application that requires a database password and high availability. Note how it combines multiple Kubernetes resources into a single, cohesive package, with comments indicating which parts were added during the refinement phase.</p>
+
+    <div class="section">
+        <h3><span class="icon">✨</span> The Final Deployable Artifact</h3>
+        <pre><code>
+<span class="comment"># --- BEGIN DEPLOYABLE ARTIFACT ---</span>
+
+<span class="comment"># This Secret was generated because "secret_mount" was on the checklist.</span>
+apiVersion: v1
+kind: Secret
+metadata:
+  name: user-auth-service-secret
+type: Opaque
+data:
+  DATABASE_PASSWORD: cGFzc3dvcmQxMjM= <span class="comment"># Placeholder password</span>
+
+---
+<span class="comment"># This Deployment is the core workload.</span>
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: user-auth-service
+  labels:
+    app: user-auth-service
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: user-auth-service
+  template:
+    metadata:
+      labels:
+        app: user-auth-service
+    spec:
+      <span class="comment"># This affinity block was added because "high_availability_rules" was on the checklist.</span>
+      affinity:
+        podAntiAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+          - labelSelector:
+              matchExpressions:
+              - key: app
+                operator: In
+                values:
+                - user-auth-service
+            topologyKey: "kubernetes.io/hostname"
+      containers:
+      - name: user-auth-service
+        image: my-registry/user-auth:v1.2
+        ports:
+        - containerPort: 3000
+        resources:
+          requests:
+            cpu: "250m"
+            memory: "512Mi"
+          limits:
+            cpu: "1"
+            memory: "1Gi"
+        <span class="comment"># These probes were added because "liveness_probe" and "readiness_probe" were on the checklist.</span>
+        livenessProbe:
+          httpGet:
+            path: /healthz
+            port: 3000
+          initialDelaySeconds: 15
+          periodSeconds: 20
+        readinessProbe:
+          httpGet:
+            path: /ready
+            port: 3000
+          initialDelaySeconds: 5
+          periodSeconds: 10
+        <span class="comment"># The secrets are mounted as environment variables.</span>
+        envFrom:
+        - secretRef:
+            name: user-auth-service-secret
+
+---
+<span class="comment"># This Service was generated because "service_exposure" was on the checklist.</span>
+apiVersion: v1
+kind: Service
+metadata:
+  name: user-auth-service
+spec:
+  type: ClusterIP
+  selector:
+    app: user-auth-service
+  ports:
+  - port: 80
+    targetPort: 3000
+
+<span class="comment"># --- END DEPLOYABLE ARTIFACT ---</span>
+        </code></pre>
+    </div>
+
+</body>
+</html>

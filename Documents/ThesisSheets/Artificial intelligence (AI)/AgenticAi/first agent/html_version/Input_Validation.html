@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agent Input Validation Logic</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+            line-height: 1.6;
+            color: #333;
+            max-width: 900px;
+            margin: 20px auto;
+            padding: 0 20px;
+            background-color: #fdfdfd;
+        }
+        h1, h2, h3, h4, h5 {
+            color: #2c3e50;
+            border-bottom: 2px solid #ecf0f1;
+            padding-bottom: 10px;
+            margin-top: 40px;
+        }
+        h1 {
+            text-align: center;
+            border-bottom: 3px solid #3498db;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            box-shadow: 0 2px 3px rgba(0,0,0,0.1);
+        }
+        th, td {
+            padding: 12px 15px;
+            text-align: left;
+            border: 1px solid #ddd;
+        }
+        th {
+            background-color: #3498db;
+            color: white;
+            font-weight: bold;
+        }
+        tr:nth-child(even) {
+            background-color: #f8f9fa;
+        }
+        code {
+            background-color: #ecf0f1;
+            padding: 3px 6px;
+            border-radius: 4px;
+            font-family: "Courier New", Courier, monospace;
+            color: #c0392b;
+        }
+        blockquote {
+            border-left: 5px solid #3498db;
+            margin: 20px 0;
+            padding: 10px 20px;
+            background-color: #ecf0f1;
+            font-style: italic;
+            color: #555;
+        }
+        .principle {
+            background-color: #eaf5ff;
+            border: 1px solid #aed6f1;
+            padding: 15px;
+            border-radius: 5px;
+        }
+        .user-input, .agent-response {
+            margin-top: 15px;
+            padding: 15px;
+            border-radius: 5px;
+        }
+        .user-input {
+            background-color: #e8f6f3;
+            border-left: 4px solid #1abc9c;
+        }
+        .agent-response {
+            background-color: #fdedec;
+            border-left: 4px solid #e74c3c;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Agent Input Validation Logic</h1>
+
+    <div class="principle">
+        <h2>Guiding Principle: Conversational Validation</h2>
+        <p>The agent's validation process is designed to be fully conversational. It no longer expects a rigid JSON structure from the user. Instead, the administrator can interact using natural language. The agent's primary validation task is to intelligently parse this language, determine if the request is actionable, and if not, guide the user by asking for the specific missing information.</p>
+        <p><strong>The core objective is to successfully extract a complete and valid set of parameters for an <code>INITIAL_PROVISIONING</code> request on either Proxmox or Kubernetes.</strong></p>
+    </div>
+
+    <h2>Phase 1: Initial Intent Check</h2>
+    <p>This is the first gate for any user message. The agent's LLM is prompted to check if the user's intent is related to provisioning by looking for keywords like <code>deploy</code>, <code>create</code>, <code>install</code>, <code>set up</code>, <code>provision</code>, etc. If the intent is not related to provisioning, the agent will respond with a polite, re-directing message.</p>
+    <blockquote>
+        <strong>Off-Topic Response Example:</strong><br>
+        "I am an AI assistant designed for resource provisioning on Proxmox and Kubernetes. I can help you deploy applications. Could you please clarify your provisioning request?"
+    </blockquote>
+
+    <h2>Phase 2: Platform Identification (Seasoned DevOps Logic)</h2>
+    <p>The agent moves beyond simple keyword matching to infer the target platform with the reasoning of a seasoned DevOps expert. It analyzes the user's request using a clear, three-tiered hierarchy of clues.</p>
+
+    <h3>The Decision-Making Hierarchy</h3>
+
+    <h4>1. Explicit Platform Keywords (Highest Priority)</h4>
+    <p>This is the most direct and unambiguous signal. If the user's message contains any of the following terms, the platform decision is considered final.</p>
+    <ul>
+        <li><strong>For Proxmox:</strong> <code>"Proxmox"</code>, <code>"VM"</code>, <code>"virtual machine"</code>, <code>"LXC Container"</code></li>
+        <li><strong>For Kubernetes:</strong> <code>"Kubernetes"</code>, <code>"K8s"</code>, <code>"pod"</code>, <code>"deployment"</code></li>
+    </ul>
+    <blockquote><strong>Example:</strong> "I need to deploy a <code>VM</code> on <code>Proxmox</code>." → The decision is definitively Proxmox.</blockquote>
+
+    <h4>2. Technical Artifacts (Strong Indicators)</h4>
+    <p>If no explicit platform keywords are found, the agent looks for technical terms that are strongly associated with one platform.</p>
+    <table>
+        <thead>
+            <tr>
+                <th>If the agent detects...</th>
+                <th>It strongly infers the target is...</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>An <strong>ISO image</strong> (e.g., <code>ubuntu-22.04.iso</code>)</td>
+                <td>Proxmox</td>
+            </tr>
+            <tr>
+                <td>A <strong>VM template ID</strong> to clone from (e.g., <code>template 9001</code>)</td>
+                <td>Proxmox</td>
+            </tr>
+            <tr>
+                <td>A <strong>CT template</strong> filename (e.g., <code>ubuntu-22.04-standard</code>)</td>
+                <td>Proxmox</td>
+            </tr>
+            <tr>
+                <td>A <strong>container image</strong> (e.g., <code>nginx:latest</code>, <code>my-registry/my-app:v2</code>)</td>
+                <td>Kubernetes</td>
+            </tr>
+            <tr>
+                <td>A <strong>container port</strong> in the context of an image</td>
+                <td>Kubernetes</td>
+            </tr>
+        </tbody>
+    </table>
+    <blockquote><strong>Example:</strong> "I need to set up a server using the <code>debian-12-netinst.iso</code>." → The mention of an ISO file strongly implies the user wants a Proxmox VM.</blockquote>
+
+    <h4>3. Architectural Context (Expert Inference)</h4>
+    <p>If the request lacks both explicit keywords and technical artifacts, the agent uses its "DevOps brain" to analyze the application's purpose and architecture.</p>
+    <h5>The agent leans towards Kubernetes if the description includes:</h5>
+    <ul>
+        <li><strong>Stateless applications:</strong> "web server," "API backend," "microservice"</li>
+        <li><strong>Scalability needs:</strong> "needs to handle high traffic," "scalable," "auto-scaling"</li>
+        <li><strong>Modern cloud-native patterns:</strong> "service discovery," "rolling updates"</li>
+    </ul>
+    <h5>The agent leans towards Proxmox if the description includes:</h5>
+    <ul>
+        <li><strong>Stateful, monolithic applications:</strong> "a dedicated database," "SQL server," "file server"</li>
+        <li><strong>Need for full OS control:</strong> "requires custom kernel modules," "needs full root access," "legacy application"</li>
+        <li><strong>Specific resource guarantees:</strong> "high I/O performance," "guaranteed RAM"</li>
+    </ul>
+    <blockquote><strong>Example:</strong> "I want to deploy our new, stateless social media API that needs to scale during peak hours." → The terms "stateless," "API," and "scale" strongly suggest the best-fit platform is Kubernetes.</blockquote>
+
+    <h3>Handling Ambiguity</h3>
+    <p>If the user provides conflicting information, the agent will not make an assumption. It will seek clarification, highlighting the conflict.</p>
+    <blockquote>
+        <strong>Agent's Response:</strong> "I see you mentioned a container image (<code>nginx:latest</code>), which is typically used for Kubernetes, but also specified a Proxmox VM. Could you please clarify which platform you'd like to use?"
+    </blockquote>
+
+    <h2>Phase 3: Entity Extraction & Rule Enforcement</h2>
+    <p>Once the agent confirms a valid platform, it proceeds to extract key pieces of information (entities) and enforces a strict set of rules to determine if the request is complete.</p>
+
+    <h3>Proxmox Provisioning Rules</h3>
+    <p>To create a VM or a container in Proxmox, the request <strong>MUST</strong> contain a <strong>name</strong> for the new resource, plus <strong>ONE</strong> of the following source identifiers:</p>
+    <table>
+        <thead>
+            <tr><th>Required Entity</th><th>Description</th><th>Example</th></tr>
+        </thead>
+        <tbody>
+            <tr><td><code>name</code></td><td>The desired hostname for the new VM or container.</td><td><code>web-server-01</code></td></tr>
+            <tr><td colspan="3" style="text-align:center; font-weight:bold;">AND ONE OF:</td></tr>
+            <tr><td><code>template_id</code></td><td>The numeric ID of an existing VM template to clone from.</td><td><code>9001</code></td></tr>
+            <tr><td><code>ct_template</code></td><td>The filename of a CT template for creating a container.</td><td><code>ubuntu-22.04-standard</code></td></tr>
+            <tr><td><code>iso_image</code></td><td>The filename of an ISO image to install a VM from.</td><td><code>debian-12-netinst.iso</code></td></tr>
+        </tbody>
+    </table>
+
+    <h3>Kubernetes Provisioning Rules</h3>
+    <p>To create a new deployment in Kubernetes, the request <strong>MUST</strong> contain <strong>ALL THREE</strong> of the following entities:</p>
+    <table>
+        <thead>
+            <tr><th>Required Entity</th><th>Description</th><th>Example</th></tr>
+        </thead>
+        <tbody>
+            <tr><td><code>application_name</code></td><td>The name for the Kubernetes Deployment/Service.</td><td><code>social-media-api</code></td></tr>
+            <tr><td><code>container_image</code></td><td>The full name of the container image to use.</td><td><code>nginx:latest</code></td></tr>
+            <tr><td><code>container_port</code></td><td>The network port the container listens on.</td><td><code>8080</code></td></tr>
+        </tbody>
+    </table>
+
+    <h2>Phase 4: Clarification Dialogue (Handling Missing Information)</h2>
+    <p>If the agent cannot extract all the required entities, it enters a clarification dialogue. It analyzes what information it has, identifies exactly what is missing, and asks a targeted question.</p>
+
+    <h4>Example Clarification for Proxmox:</h4>
+    <div class="user-input"><strong>User:</strong> "I need to deploy our new social media app in a Proxmox VM."</div>
+    <div class="agent-response">
+        <strong>Agent's Analysis:</strong> <code>name</code> ('social-media-app') is present. No source identifier (<code>template_id</code>, <code>ct_template</code>, <code>iso_image</code>) is found.<br>
+        <strong>Agent's Response:</strong> "I can help with that. To create the 'social-media-app' VM in Proxmox, I need to know how to build it. Please provide either the <strong>template ID</strong> to clone from, or the name of the <strong>ISO image</strong> to use for installation."
+    </div>
+
+    <h4>Example Clarification for Kubernetes:</h4>
+    <div class="user-input"><strong>User:</strong> "Please set up an OLLAMA instance on Kubernetes using the <code>ollama/ollama</code> image."</div>
+    <div class="agent-response">
+        <strong>Agent's Analysis:</strong> <code>application_name</code> ('ollama-instance') and <code>container_image</code> ('ollama/ollama') are present. <code>container_port</code> is missing.<br>
+        <strong>Agent's Response:</strong> "Understood. I'm ready to set up OLLAMA with the <code>ollama/ollama</code> image. What is the <strong>container port</strong> that the OLLAMA service listens on?"
+    </div>
+
+    <h2>Phase 5: Example Validation Scenarios</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>User Input (Chat)</th>
+                <th>Agent's Internal Analysis</th>
+                <th>Resulting Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>"Please create a new VM named <code>prod-web-01</code> by cloning template <code>9001</code>."</td>
+                <td><strong>PASS:</strong> Intent is provisioning. Platform is Proxmox. Finds <code>name: prod-web-01</code> and <code>template_id: 9001</code>. All rules met.</td>
+                <td>Proceed to data collection and next agent.</td>
+            </tr>
+            <tr>
+                <td>"Deploy our new <code>user-auth-service</code> to K8s. The image is <code>my-registry/user-auth:v1.2</code> and it runs on port <code>3000</code>."</td>
+                <td><strong>PASS:</strong> Intent is provisioning. Platform is Kubernetes. Finds all required entities. All rules met.</td>
+                <td>Proceed to data collection and next agent.</td>
+            </tr>
+            <tr>
+                <td>"I need a powerful VM for running OLLAMA."</td>
+                <td><strong>FAIL (Incomplete):</strong> Intent is provisioning. Platform is Proxmox. Finds a potential <code>name: ollama-vm</code>. Fails to find a source identifier.</td>
+                <td>Initiate clarification dialogue (Phase 4).</td>
+            </tr>
+            <tr>
+                <td>"I want to deploy a Nginx web server."</td>
+                <td><strong>FAIL (Incomplete):</strong> Intent is provisioning. Platform is Kubernetes (inferred). Finds <code>application_name: nginx-web-server</code>. Fails to find a specific <code>container_port</code>.</td>
+                <td>Initiate clarification dialogue (Phase 4).</td>
+            </tr>
+        </tbody>
+    </table>
+
+</body>
+</html>

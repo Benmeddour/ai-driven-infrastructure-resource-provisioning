@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agent 3 Workflow: The Build & Refinement Process</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+            line-height: 1.6;
+            color: #34495e;
+            max-width: 950px;
+            margin: 20px auto;
+            padding: 0 20px;
+            background-color: #f8f9fa;
+        }
+        h1, h2, h3 {
+            color: #2c3e50;
+            border-bottom: 2px solid #ecf0f1;
+            padding-bottom: 10px;
+            margin-top: 40px;
+        }
+        h1 {
+            text-align: center;
+            border-bottom: 3px solid #8e44ad;
+            font-size: 2.5em;
+        }
+        h2 {
+            font-size: 1.8em;
+            display: flex;
+            align-items: center;
+        }
+        h2 .step-number {
+            background-color: #8e44ad;
+            color: white;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2em;
+            font-weight: bold;
+            margin-right: 20px;
+            flex-shrink: 0;
+        }
+        .introduction {
+            background-color: #f5eef8;
+            border: 1px solid #d7bde2;
+            padding: 25px;
+            border-radius: 8px;
+            margin-bottom: 40px;
+            font-size: 1.1em;
+        }
+        .workflow-step {
+            background-color: #ffffff;
+            border: 1px solid #e5e7e9;
+            border-left: 5px solid #9b59b6;
+            padding: 20px 25px;
+            margin-top: 25px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+        }
+        .arrow-down {
+            text-align: center;
+            font-size: 2.5em;
+            color: #bdc3c7;
+            margin: 20px 0;
+        }
+        code {
+            background-color: #ecf0f1;
+            padding: 4px 7px;
+            border-radius: 4px;
+            font-family: "Courier New", Courier, monospace;
+            color: #c0392b;
+            font-size: 0.95em;
+        }
+        strong {
+            color: #8e44ad;
+        }
+        .mermaid-container {
+            text-align: center;
+            padding: 20px;
+            background-color: #fdfdfd;
+            border-radius: 8px;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Agent 3 Workflow: The Build & Refinement Process</h1>
+
+    <div class="introduction">
+        <p>This document illustrates the complete, step-by-step workflow of the <strong>Build and Refinement Agent (Agent 3)</strong>. The agent's process is designed for maximum reliability and quality, operating in two distinct phases: an initial "Build" phase to create a functional draft, followed by an iterative "Refine" phase to enhance the draft with best practices.</p>
+    </div>
+
+    <!-- Step 1 -->
+    <div class="workflow-step">
+        <h2><span class="step-number">1</span>Ingest the Strategic Plan</h2>
+        <p>The workflow begins when Agent 3 receives the "Strategic Plan" JSON object from Agent 2. This plan contains all the high-level directives and recommendations needed to begin the build process, including the <code>platform_target</code>, <code>resource_recommendations</code>, and the crucial <code>required_configurations</code> checklist.</p>
+    </div>
+
+    <div class="arrow-down">↓</div>
+
+    <!-- Step 2 -->
+    <div class="workflow-step">
+        <h2><span class="step-number">2</span>Phase 1: Initial Manifest Generation (The "Build")</h2>
+        <p>The agent immediately uses its <strong>Initial Manifest Generator</strong> tool. This tool's sole purpose is to create a complete, but basic, "draft" manifest.</p>
+        <p>It populates this draft using the core information from the strategic plan:</p>
+        <ul>
+            <li>It generates the correct file type (e.g., Kubernetes YAML) based on the <code>platform_target</code>.</li>
+            <li>It sets the fundamental values like application name, container image, replicas, CPU, and memory from the <code>resource_recommendations</code>.</li>
+        </ul>
+        <p>At the end of this step, the agent holds a functional but un-enhanced configuration file in its working memory.</p>
+    </div>
+
+    <div class="arrow-down">↓</div>
+
+    <!-- Step 3 -->
+    <div class="workflow-step">
+        <h2><span class="step-number">3</span>Phase 2: ReAct Refinement Loop (The "Refine")</h2>
+        <p>This is where the agent's intelligence shines. It iterates through the <code>required_configurations</code> checklist provided by Agent 2, using a <strong>ReAct (Reason-Act-Observe)</strong> loop to enhance the draft manifest.</p>
+        
+        <h4>Visualizing the Loop</h4>
+        <div class="mermaid-container">
+            <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+            <div class="mermaid">
+            graph TD
+                A(Start with Draft Manifest) --> B{Checklist item exists?};
+                B -- Yes --> C[<strong>Reason:</strong><br>Plan how to implement item];
+                C --> D[<strong>Act:</strong><br>Use Documentation Tool RAG];
+                D --> E[<strong>Observe:</strong><br>Process best-practice snippet];
+                E --> F[<strong>Refine:</strong><br>Merge snippet into manifest];
+                F --> B;
+                B -- No --> G(End Loop: Manifest Refined);
+            </div>
+        </div>
+
+        <p>For each item on the checklist (e.g., <code>liveness_probe</code>, <code>high_availability_rules</code>), the agent:</p>
+        <ol>
+            <li><strong>Reasons</strong> about the best way to implement it.</li>
+            <li><strong>Acts</strong> by querying its <strong>Documentation Retriever (RAG)</strong> tool for best-practice YAML snippets.</li>
+            <li><strong>Observes</strong> the result and intelligently **merges** the new configuration into the draft manifest.</li>
+        </ol>
+        <p>This loop continues until every item on the checklist has been implemented, transforming the basic draft into a production-ready artifact.</p>
+    </div>
+
+    <div class="arrow-down">↓</div>
+
+    <!-- Step 4 -->
+    <div class="workflow-step">
+        <h2><span class="step-number">4</span>Final Output</h2>
+        <p>Once the refinement loop is complete, the agent has a final, complete, and enhanced manifest. This <strong>Deployable Artifact</strong> is the culmination of the entire multi-agent workflow and is ready to be sent to the user or a downstream execution engine.</p>
+    </div>
+
+</body>
+</html>

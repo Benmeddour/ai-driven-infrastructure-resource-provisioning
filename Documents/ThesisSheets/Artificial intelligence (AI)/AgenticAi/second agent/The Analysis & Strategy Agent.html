@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agent 2 Architecture: The Analysis & Strategy Agent</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+            line-height: 1.6;
+            color: #34495e;
+            max-width: 950px;
+            margin: 20px auto;
+            padding: 0 20px;
+            background-color: #f8f9fa;
+        }
+        h1, h2, h3, h4 {
+            color: #2c3e50;
+            border-bottom: 2px solid #ecf0f1;
+            padding-bottom: 10px;
+            margin-top: 40px;
+        }
+        h1 {
+            text-align: center;
+            border-bottom: 3px solid #e67e22;
+            font-size: 2.5em;
+        }
+        h2 {
+            font-size: 1.8em;
+        }
+        h3 {
+            font-size: 1.4em;
+            border-bottom: none;
+            display: flex;
+            align-items: center;
+        }
+        h4 {
+            font-size: 1.2em;
+            border-bottom: 1px dashed #bdc3c7;
+            margin-top: 30px;
+        }
+        h3 .icon {
+            font-size: 1.5em;
+            margin-right: 15px;
+            color: #e67e22;
+        }
+        .introduction {
+            background-color: #fef5e7;
+            border: 1px solid #f5cba7;
+            padding: 25px;
+            border-radius: 8px;
+            margin-bottom: 40px;
+            font-size: 1.1em;
+        }
+        .section-card {
+            background-color: #ffffff;
+            border: 1px solid #e5e7e9;
+            border-left: 5px solid #f39c12;
+            padding: 20px 25px;
+            margin-top: 25px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+        }
+        pre {
+            background-color: #2c3e50;
+            color: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            overflow-x: auto;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+            font-size: 0.9em;
+        }
+        pre .comment {
+            color: #7f8c8d;
+            font-style: italic;
+        }
+        .inline-code {
+            background-color: #ecf0f1;
+            padding: 4px 7px;
+            border-radius: 4px;
+            color: #c0392b;
+            font-family: "Courier New", Courier, monospace;
+            font-size: 0.95em;
+        }
+        strong {
+            color: #d35400;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Agent 2 Architecture: The Analysis & Strategy Agent</h1>
+
+    <div class="introduction">
+        <p>This document provides the complete architectural specification for <strong>Agent 2</strong>. Its role is to emulate a <strong>seasoned DevOps architect</strong>, transforming the raw data from Agent 1 into a high-level <strong>Strategic Plan</strong>. This document covers both the agent's internal analysis workflow and its final output data contract.</p>
+    </div>
+
+    <h2>I. The Adaptive Analysis Workflow</h2>
+    <p>The agent's core logic is an adaptive pipeline that modifies its approach based on the richness of the input data.</p>
+
+    <div class="section-card">
+        <h3><span class="icon">🧠</span>Step 1: Application Profile Synthesis</h3>
+        <p>The agent's first task is to build a profile of the application. It determines which analysis path to take by checking for a provided Git repository.</p>
+        
+        <h4>Path A: Deep Analysis (Repository Provided)</h4>
+        <p>This path allows for a detailed, data-driven profile by using parser tools on the source code to identify the precise tech stack, dependencies, and workload type.</p>
+
+        <h4>Path B: Heuristic Analysis (No Repository)</h4>
+        <p>When source code is unavailable, the agent relies on its "experience" by analyzing the user's chat for keywords (e.g., "Nginx," "database") and qualitative requirements (e.g., "high availability") to infer the application's nature.</p>
+    </div>
+
+    <div class="section-card">
+        <h3><span class="icon">📊</span>Step 2: Infrastructure Feasibility Analysis</h3>
+        <p>This "reality check" is always performed. The agent analyzes the provided infrastructure state (Proxmox or Kubernetes) to ensure its recommendations are feasible, checking for host suitability, policy compliance, and storage/template availability.</p>
+    </div>
+
+    <div class="section-card">
+        <h3><span class="icon">📝</span>Step 3: Strategic Synthesis</h3>
+        <p>The agent combines the application profile (from either Path A or B) with the infrastructure constraints to generate the final strategic plan. The specificity of the plan is directly proportional to the quality of the input data.</p>
+    </div>
+
+    <h2>II. Output Specification: The "Strategic Plan"</h2>
+    <p>The agent's output is a single JSON object containing a root key, <code>strategic_plan</code>. This plan is the formal input for Agent 3.</p>
+    <ul>
+        <li><code class="inline-code">platform_target</code>: The target infrastructure platform ("Proxmox" or "Kubernetes").</li>
+        <li><code class="inline-code">resource_recommendations</code>: The recommended CPU, memory, and replica count.</li>
+        <li><code class="inline-code">deployment_strategy</code>: High-level strategy, including HA and workload type.</li>
+        <li><code class="inline-code">inferred_dependencies</code>: A list of likely external service dependencies.</li>
+        <li><code class="inline-code">required_configurations</code>: A checklist of essential configurations for Agent 3.</li>
+        <li><code class="inline-code">reasoning_summary</code>: A human-readable explanation of how the plan was formed, explicitly stating if the analysis was deep or heuristic.</li>
+    </ul>
+
+    <h2>III. Comprehensive Example Payloads</h2>
+
+    <div class="section-card">
+        <h3><span class="icon">🎯</span>Example 1: Kubernetes Deep Analysis (Repository Provided)</h3>
+        <p><strong>Scenario:</strong> The user provides a GitHub repository for a Python web service to be deployed on Kubernetes.</p>
+        <pre><code>
+{
+  "strategic_plan": {
+    "platform_target": "Kubernetes",
+    "resource_recommendations": { "cpu_request": "250m", "cpu_limit": "1", "memory_request": "512Mi", "memory_limit": "1Gi", "replicas": 2 },
+    "deployment_strategy": { "high_availability": true, "workload_type": "web-api" },
+    "inferred_dependencies": ["PostgreSQL"],
+    "required_configurations": ["liveness_probe", "readiness_probe", "service_exposure", "secret_mount"],
+    "reasoning_summary": "Based on deep analysis of the FastAPI application and psycopg2 dependency, a stateless web API requiring a database is indicated. Recommended 2 replicas with HA for reliability. Initial resource allocation is moderate, typical for a Python web service."
+  }
+}
+        </code></pre>
+    </div>
+
+    <div class="section-card">
+        <h3><span class="icon">🎯</span>Example 2: Kubernetes Heuristic Analysis (No Repository)</h3>
+        <p><strong>Scenario:</strong> The user asks to deploy "Nginx" on Kubernetes without providing a repository.</p>
+        <pre><code>
+{
+  "strategic_plan": {
+    "platform_target": "Kubernetes",
+    "resource_recommendations": { "cpu_request": "100m", "cpu_limit": "500m", "memory_request": "128Mi", "memory_limit": "256Mi", "replicas": 2 },
+    "deployment_strategy": { "high_availability": false, "workload_type": "web-server" },
+    "inferred_dependencies": [],
+    "required_configurations": ["liveness_probe", "readiness_probe", "service_exposure"],
+    "reasoning_summary": "Based on heuristic analysis of the user's request for an 'Nginx' server. No repository was provided. Recommending a standard, lightweight configuration for a basic web server. High availability was not requested."
+  }
+}
+        </code></pre>
+    </div>
+
+    <div class="section-card">
+        <h3><span class="icon">🎯</span>Example 3: Proxmox Deep Analysis (Repository Provided)</h3>
+        <p><strong>Scenario:</strong> The user provides a GitHub repository for a Java monolith application and explicitly requests a Proxmox VM.</p>
+        <pre><code>
+{
+  "strategic_plan": {
+    "platform_target": "Proxmox",
+    "resource_recommendations": { "cpu_request": "4", "cpu_limit": "4", "memory_request": "8Gi", "memory_limit": "8Gi", "replicas": 1 },
+    "deployment_strategy": { "high_availability": false, "workload_type": "stateful-monolith" },
+    "inferred_dependencies": ["OracleDB"],
+    "required_configurations": [],
+    "reasoning_summary": "Based on deep analysis of the provided Java Spring application repository. A larger VM is recommended to accommodate the JVM's memory requirements. The presence of a JDBC driver suggests a dependency on an external database."
+  }
+}
+        </code></pre>
+    </div>
+
+    <div class="section-card">
+        <h3><span class="icon">🎯</span>Example 4: Proxmox Heuristic Analysis (No Repository)</h3>
+        <p><strong>Scenario:</strong> The user asks to create a generic Proxmox VM by cloning a template, providing no repository.</p>
+        <pre><code>
+{
+  "strategic_plan": {
+    "platform_target": "Proxmox",
+    "resource_recommendations": {
+      <span class="comment">// For Proxmox, request and limit are typically the same.</span>
+      "cpu_request": "2", "cpu_limit": "2", "memory_request": "4Gi", "memory_limit": "4Gi", "replicas": 1
+    },
+    "deployment_strategy": { "high_availability": false, "workload_type": "general-purpose-vm" },
+    "inferred_dependencies": [],
+    "required_configurations": [], <span class="comment">// K8s-specific configurations do not apply.</span>
+    "reasoning_summary": "Based on heuristic analysis of the user's request to clone template 9001. No specific performance requirements were identified. A standard, general-purpose VM configuration is recommended."
+  }
+}
+        </code></pre>
+    </div>
+
+</body>
+</html>

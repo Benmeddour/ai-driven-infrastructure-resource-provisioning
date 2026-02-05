@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agent 3 Architecture: The Build and Refinement Agent</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+            line-height: 1.6;
+            color: #34495e;
+            max-width: 950px;
+            margin: 20px auto;
+            padding: 0 20px;
+            background-color: #f8f9fa;
+        }
+        h1, h2, h3, h4 {
+            color: #2c3e50;
+            border-bottom: 2px solid #ecf0f1;
+            padding-bottom: 10px;
+            margin-top: 40px;
+        }
+        h1 {
+            text-align: center;
+            border-bottom: 3px solid #8e44ad;
+            font-size: 2.5em;
+        }
+        h2 {
+            font-size: 1.8em;
+        }
+        h3 {
+            font-size: 1.4em;
+            border-bottom: none;
+            display: flex;
+            align-items: center;
+        }
+        h4 {
+            font-size: 1.2em;
+            border-bottom: 1px dashed #bdc3c7;
+            margin-top: 30px;
+        }
+        h3 .icon {
+            font-size: 1.5em;
+            margin-right: 15px;
+            color: #8e44ad;
+        }
+        .introduction {
+            background-color: #f5eef8;
+            border: 1px solid #d7bde2;
+            padding: 25px;
+            border-radius: 8px;
+            margin-bottom: 40px;
+            font-size: 1.1em;
+        }
+        .section {
+            background-color: #ffffff;
+            border: 1px solid #e5e7e9;
+            border-left: 5px solid #9b59b6;
+            padding: 20px 25px;
+            margin-top: 25px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+        }
+        pre {
+            background-color: #2c3e50;
+            color: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            overflow-x: auto;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+            font-size: 0.9em;
+        }
+        pre .comment {
+            color: #7f8c8d;
+            font-style: italic;
+        }
+        code {
+            background-color: #ecf0f1;
+            padding: 4px 7px;
+            border-radius: 4px;
+            font-family: "Courier New", Courier, monospace;
+            color: #c0392b;
+            font-size: 0.95em;
+        }
+        strong {
+            color: #8e44ad;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Agent 3 Architecture: The Build and Refinement Agent</h1>
+
+    <div class="introduction">
+        <p>This document specifies the architecture for <strong>Agent 3</strong>. Its role is that of a <strong>master craftsperson</strong>, operating on a robust "Build, then Refine" model. It first generates a basic configuration from the strategic plan and then uses a ReAct loop to enhance it with best practices.</p>
+    </div>
+
+    <h2>Core Logic: The Build & Refine Workflow</h2>
+    <p>Agent 3's logic is a clear, two-phase process:</p>
+    <div class="section">
+        <h3><span class="icon">🏗️</span> Phase 1: Initial Manifest Generation (The Build)</h3>
+        <p>The agent takes the "Strategic Plan" from Agent 2 and immediately uses its <strong>Initial Manifest Generator</strong> tool to create a basic, functional manifest. This "draft" is created based on:</p>
+        <ul>
+            <li>The <code>platform_target</code> (to choose the correct format, e.g., Kubernetes YAML).</li>
+            <li>The <code>resource_recommendations</code> (to populate CPU, memory, and replica counts).</li>
+            <li>The user's original <code>extracted_parameters</code> from the initial context payload.</li>
+        </ul>
+        <p>At the end of this phase, the agent has a complete but un-enhanced configuration file in memory.</p>
+    </div>
+
+    <div class="section">
+        <h3><span class="icon">✨</span> Phase 2: ReAct Refinement Loop (The Refinement)</h3>
+        <p>Now, the agent begins its iterative enhancement process, driven by the <code>required_configurations</code> checklist from Agent 2's plan.</p>
+        <ol>
+            <li><strong>Reason:</strong> The LLM examines the <strong>current draft manifest</strong> and the next item on its checklist (e.g., <code>"liveness_probe"</code>). It thinks, "I need to add a liveness probe to this existing manifest."</li>
+            <li><strong>Act:</strong> It uses its <strong>Documentation Retriever (RAG)</strong> tool to ask, "What is the best-practice YAML for a liveness probe on a web-api workload?"</li>
+            <li><strong>Observe:</strong> It receives a best-practice YAML snippet from its documentation.</li>
+            <li><strong>Refine & Repeat:</strong> The agent intelligently merges or adds the new snippet into its draft manifest. It then moves to the next item on the checklist and repeats the loop until all requirements are fulfilled.</li>
+        </ol>
+    </div>
+
+    <h2>The Builder's Toolkit</h2>
+    <p>To execute its workflow, Agent 3 is equipped with a specific set of tools:</p>
+
+    <div class="section">
+        <h3><span class="icon">🏗️</span> Tool 1: Initial Manifest Generator</h3>
+        <p>This tool is used in Phase 1. It generates a basic but complete boilerplate manifest (e.g., a Kubernetes Deployment) based on the core recommendations from Agent 2's plan.</p>
+    </div>
+
+    <div class="section">
+        <h3><span class="icon">📚</span> Tool 2: Documentation Retriever (RAG)</h3>
+        <p>Used in Phase 2, this is the agent's "expert knowledge" tool. It queries an internal knowledge base to find best-practice YAML snippets and configuration patterns for enhancement tasks.</p>
+    </div>
+
+    <h2>Final Output</h2>
+    <div class="section">
+        <h3><span class="icon">📄</span> The Deployable Artifact</h3>
+        <p>The final output of Agent 3 is one or more complete and refined configuration files. This output is ready to be passed directly to the user or an execution engine.</p>
+        <p>While Kubernetes YAML is the primary example, the output could also be structured as parameters for a Terraform module if the target platform were, for instance, a cloud provider.</p>
+        <pre><code>
+# This final YAML is the result of the initial build PLUS all refinements.
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: user-auth-service
+  labels:
+    app: user-auth-service
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: user-auth-service
+  template:
+    metadata:
+      labels:
+        app: user-auth-service
+    spec:
+      # This affinity block was added during the refinement loop.
+      affinity:
+        podAntiAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+          - labelSelector:
+              matchExpressions:
+              - key: app
+                operator: In
+                values:
+                - user-auth-service
+            topologyKey: "kubernetes.io/hostname"
+      containers:
+      - name: user-auth-service
+        image: my-registry/user-auth:v1.2
+        ports:
+        - containerPort: 3000
+        resources:
+          requests:
+            cpu: "250m"
+            memory: "512Mi"
+          limits:
+            cpu: "1"
+            memory: "1Gi"
+        # This liveness probe was added during the refinement loop.
+        livenessProbe:
+          httpGet:
+            path: /healthz
+            port: 3000
+          initialDelaySeconds: 15
+          periodSeconds: 20
+---
+# This Service object was likely generated and added during the refinement loop.
+apiVersion: v1
+kind: Service
+metadata:
+  name: user-auth-service
+spec:
+  type: ClusterIP
+  selector:
+    app: user-auth-service
+  ports:
+  - port: 80
+    targetPort: 3000
+        </code></pre>
+    </div>
+
+</body>
+</html>

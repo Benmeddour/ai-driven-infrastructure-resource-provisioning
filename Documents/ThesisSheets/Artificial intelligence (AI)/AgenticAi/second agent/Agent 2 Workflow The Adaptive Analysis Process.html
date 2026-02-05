@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agent 2 Workflow: Emulating a DevOps Architect</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+            line-height: 1.6;
+            color: #34495e;
+            max-width: 950px;
+            margin: 20px auto;
+            padding: 0 20px;
+            background-color: #f8f9fa;
+        }
+        h1, h2, h3, h4 {
+            color: #2c3e50;
+            border-bottom: 2px solid #ecf0f1;
+            padding-bottom: 10px;
+            margin-top: 40px;
+        }
+        h1 {
+            text-align: center;
+            border-bottom: 3px solid #e67e22;
+            font-size: 2.5em;
+        }
+        h2 {
+            font-size: 1.8em;
+        }
+        h3 {
+            font-size: 1.4em;
+            border-bottom: none;
+            display: flex;
+            align-items: center;
+        }
+        h4 {
+            font-size: 1.2em;
+            border-bottom: 1px dashed #bdc3c7;
+            margin-top: 30px;
+        }
+        h3 .icon {
+            font-size: 1.5em;
+            margin-right: 15px;
+            color: #e67e22;
+        }
+        .introduction {
+            background-color: #fef5e7;
+            border: 1px solid #f5cba7;
+            padding: 25px;
+            border-radius: 8px;
+            margin-bottom: 40px;
+            font-size: 1.1em;
+        }
+        .workflow-step {
+            background-color: #ffffff;
+            border: 1px solid #e5e7e9;
+            border-left: 5px solid #f39c12;
+            padding: 20px 25px;
+            margin-top: 25px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+        }
+        code {
+            background-color: #ecf0f1;
+            padding: 4px 7px;
+            border-radius: 4px;
+            font-family: "Courier New", Courier, monospace;
+            color: #c0392b;
+            font-size: 0.95em;
+        }
+        ul, ol {
+            padding-left: 25px;
+        }
+        li {
+            margin-bottom: 10px;
+        }
+        strong {
+            color: #d35400;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Agent 2 Workflow: Emulating a DevOps Architect</h1>
+
+    <div class="introduction">
+        <p>This document details the internal reasoning pipeline for <strong>Agent 2</strong>. Its core function is to act as the digital counterpart to a <strong>seasoned DevOps architect</strong>. The agent doesn't just execute steps; it emulates an expert's thought process to transform raw data into actionable intelligence and a high-level strategic plan.</p>
+    </div>
+
+    <h2>The Architect's Analysis Pipeline</h2>
+
+    <ol>
+        <li class="workflow-step">
+            <h3><span class="icon">📥</span> Step 1: Initial Triage & Context Correlation</h3>
+            <p>Like any good architect, the agent first triages the incoming request. It ingests the full payload from Agent 1 and immediately correlates the user's stated intent (from the <code>original_chat</code>) with the provided technical artifacts (the <code>application_context</code> and <code>infrastructure_state</code>). It then determines which analysis path to take based on the presence of a repository.</p>
+        </li>
+
+        <li class="workflow-step">
+            <h3><span class="icon">🧠</span> Step 2: Application Profile Synthesis (The "Discovery" Phase)</h3>
+            <p>The agent builds a holistic profile of the application. The persona's approach adapts based on the available information.</p>
+
+            <h4>Path A: Deep Dive Analysis (Repository Provided)</h4>
+            <p>Here, the architect persona performs a thorough code review.</p>
+            <ul>
+                <li><strong>Dissects the Dockerfile:</strong> It analyzes the <code>Dockerfile</code> to understand the application's foundation—its base OS, build process, and exposed ports.</li>
+                <li><strong>Audits Dependency Manifests:</strong> It uses its parser tools to audit files like <code>requirements.txt</code> or <code>package.json</code>, identifying key libraries that have significant resource implications (e.g., ML frameworks, image processing libraries).</li>
+                <li><strong>Infers Workload Profile:</strong> Based on the identified framework (e.g., FastAPI, Express), it classifies the workload with high confidence (e.g., "stateless-web-api," "background-worker").</li>
+            </ul>
+
+            <h4>Path B: Heuristic Analysis (No Repository)</h4>
+            <p>Here, the architect persona relies on experience and pattern matching.</p>
+            <ul>
+                <li><strong>Leverages Knowledge of Common Applications:</strong> It scans the user's chat for names like "Nginx," "PostgreSQL," or "OLLAMA" and applies its built-in knowledge about their typical behavior (e.g., "Nginx is a lightweight web server," "PostgreSQL is a stateful database").</li>
+                <li><strong>Interprets Qualitative User Intent:</strong> It looks for business requirements like "high availability" or "low consumption" and translates them into technical strategy.</li>
+                <li><strong>Applies Safe Defaults:</strong> If no specific clues are found, it defaults to a safe, generic profile (<code>general-purpose-vm</code>), ensuring a valid starting point while acknowledging the limited information.</li>
+            </ul>
+        </li>
+
+        <li class="workflow-step">
+            <h3><span class="icon">📊</span> Step 3: Infrastructure Feasibility Analysis (The "Reality Check")</h3>
+            <p>The architect persona then checks if the desired deployment is feasible and wise given the current state of the infrastructure.</p>
+            
+            <h4>If the target is Proxmox:</h4>
+            <ul>
+                <li>It identifies the <strong>least-stressed host</strong> to ensure good "day-one" performance and avoid impacting existing workloads.</li>
+                <li>It confirms that the requested storage and source templates are actually available to prevent immediate deployment failures.</li>
+            </ul>
+
+            <h4>If the target is Kubernetes:</h4>
+            <ul>
+                <li>It ensures there is sufficient <strong>schedulable capacity</strong> on the cluster.</li>
+                <li>It verifies that any recommendations will <strong>comply with policy guardrails</strong> like <code>ResourceQuotas</code>.</li>
+                <li>It assesses the available <code>StorageClasses</code> to plan for persistence if needed.</li>
+            </ul>
+        </li>
+
+        <li class="workflow-step">
+            <h3><span class="icon">📝</span> Step 4: Strategic Plan Formulation</h3>
+            <p>Finally, the agent synthesizes all its findings into the "Strategic Plan." This is the culmination of its analysis.</p>
+            <ul>
+                <li><strong>Resource Sizing:</strong> It recommends initial CPU/memory values, which are more aggressive and tailored with a deep analysis, and more conservative with a heuristic one.</li>
+                <li><strong>Strategy Definition:</strong> It defines the scalability and availability strategy (e.g., replica count, HA flag).</li>
+                <li><strong>Configuration Checklist:</strong> It creates the checklist of directives for Agent 3 based on the workload profile (e.g., add probes for a web API).</li>
+                <li><strong>Architect's Notes:</strong> It generates the crucial <code>reasoning_summary</code>, explaining its thought process and explicitly stating whether its analysis was data-driven or heuristic-based for full transparency.</li>
+            </ul>
+        </li>
+    </ol>
+
+</body>
+</html>

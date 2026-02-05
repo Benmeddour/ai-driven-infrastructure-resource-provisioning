@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Data Contract: The Context Payload</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+            line-height: 1.6;
+            color: #34495e;
+            max-width: 950px;
+            margin: 20px auto;
+            padding: 0 20px;
+            background-color: #f8f9fa;
+        }
+        h1, h2, h3 {
+            color: #2c3e50;
+            border-bottom: 2px solid #ecf0f1;
+            padding-bottom: 10px;
+            margin-top: 40px;
+        }
+        h1 {
+            text-align: center;
+            border-bottom: 3px solid #2980b9;
+            font-size: 2.5em;
+        }
+        h2 {
+            font-size: 1.8em;
+        }
+        h3 {
+            font-size: 1.4em;
+            border-bottom: none;
+            display: flex;
+            align-items: center;
+        }
+        h3 .icon {
+            font-size: 1.5em;
+            margin-right: 15px;
+            color: #2980b9;
+        }
+        .introduction {
+            background-color: #ebf5fb;
+            border: 1px solid #aed6f1;
+            padding: 25px;
+            border-radius: 8px;
+            margin-bottom: 40px;
+            font-size: 1.1em;
+        }
+        .payload-section {
+            background-color: #ffffff;
+            border: 1px solid #e5e7e9;
+            border-left: 5px solid #3498db;
+            padding: 20px 25px;
+            margin-top: 25px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+        }
+        pre {
+            background-color: #2c3e50;
+            color: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            overflow-x: auto;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+            font-size: 0.9em;
+        }
+        pre .comment {
+            color: #7f8c8d;
+            font-style: italic;
+        }
+        .inline-code {
+            background-color: #ecf0f1;
+            padding: 4px 7px;
+            border-radius: 4px;
+            color: #c0392b;
+            font-family: "Courier New", Courier, monospace;
+            font-size: 0.95em;
+        }
+        strong {
+            color: #2980b9;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1>Data Contract: The Context Payload</h1>
+
+    <div class="introduction">
+        <p>This document defines the <strong>immutable data contract</strong> for the JSON payload produced by the <strong>Chat Validator and Data Collector Agent </strong>. This payload acts as the <strong> single source of truth </strong> for any downstream consumer agent responsible for analysis, planning, or execution.</p>
+        <p>Designed to be <strong>structured, predictable, and machine-readable</strong>, the payload ensures that <strong>all necessary context</strong>—from user intent to infrastructure state and application pointers—is captured in a consistent format. It is not an executable command, but rather a comprehensive <strong>context payload</strong> that encapsulates everything required for intelligent decision-making.</p>
+	<p>The Chat Validator and Data Collector Agent outputs a <strong> single structured JSON object </strong> as its final deliverable. This object represents the <strong>official hand-off</strong> between the <strong>data collection phase</strong> and the <strong>decision-making phase</strong> of the workflow.</p>
+    </div>
+
+    <h2>Top-Level Payload Schema</h2>
+    <p>The root of the JSON object is composed of the following keys:</p>
+
+    <div class="payload-section">
+        <h3><span class="icon">📝</span><code class="inline-code">request_details</code> (Object)</h3>
+        <p>Encapsulates the user's original intent and the parameters extracted by the validation engine.</p>
+        <ul>
+            <li><strong>original_chat (String):</strong> The raw, verbatim chat message. Essential for audit trails and debugging.</li>
+            <li><strong>extracted_parameters (Object):</strong> The validated, structured entities parsed from the chat. This is the machine-usable version of the user the chat. This is the machine-usable version of the user's request.</li>
+        </ul>
+    </div>
+
+    <div class="payload-section">
+        <h3><span class="icon">🖥️</span><code class="inline-code">platform_target</code> (Enumerated String)</h3>
+        <p>A strictly-defined string that specifies the target infrastructure. This key dictates the structure of the <code class="inline-code">infrastructure_state</code> object. Possible values are: <strong>"Proxmox"</strong> or <strong>"Kubernetes"</strong>.</p>
+    </div>
+
+    <div class="payload-section">
+        <h3><span class="icon">📊</span><code class="inline-code">infrastructure_state</code> (Object)</h3>
+        <p>Contains the "ground truth" data snapshot pulled directly from the target infrastructure's API at the time of the request.</p>
+    </div>
+
+    <div class="payload-section">
+        <h3><span class="icon">📦</span><code class="inline-code">application_context</code> (Object | Null)</h3>
+        <p>This section provides a <strong>pointer</strong> to the application's source code. The actual cloning and analysis of the repository is the responsibility of the downstream analysis agent. If no repository was provided, this key's value will be <code class="inline-code">null</code>.</p>
+        <ul>
+            <li><strong>repository_url (String):</strong> The source URL of the Git repository.</li>
+        </ul>
+    </div>
+
+    <div class="payload-section">
+        <h3><span class="icon">💬</span><code class="inline-code">summary_message</code> (String)</h3>
+        <p>A concise, human-readable summary of the validated request and the data collected, intended for logging and providing a clear audit trail.</p>
+    </div>
+
+    <h2>Example Payloads</h2>
+
+    <h3>Example 1: Kubernetes Deployment with GitHub Repository</h3>
+    <pre><code>
+{
+  <span class="comment">// User's original request and the agent's structured interpretation.</span>
+  "request_details": {
+    "original_chat": "Please deploy our new user-auth-service to K8s. The image is my-registry/user-auth:v1.2, it runs on port 3000, and the repo is at https://github.com/my-org/user-auth-service",
+    "extracted_parameters": {
+      "application_name": "user-auth-service",
+      "container_image": "my-registry/user-auth:v1.2",
+      "container_port": 3000
+    }
+  },
+  "platform_target": "Kubernetes",
+  <span class="comment">// "Ground truth" from the Kubernetes cluster API.</span>
+  "infrastructure_state": {
+    "nodes": [
+      {"name": "k8s-worker-1", "status": "Ready", "allocatable_cpu": "3500m", "allocatable_memory": "7Gi"},
+      {"name": "k8s-worker-2", "status": "Ready", "allocatable_cpu": "3800m", "allocatable_memory": "7Gi"}
+    ],
+    "resource_quotas": {"hard": {"limits.cpu": "10", "limits.memory": "32Gi"}},
+    "storage_classes": ["ceph-rbd", "local-path"]
+  },
+  <span class="comment">// A simple pointer to the source code. Analysis is deferred to the next agent.</span>
+  "application_context": {
+    "repository_url": "https://github.com/my-org/user-auth-service"
+  },
+  "summary_message": "Validated request to provision 'user-auth-service' on Kubernetes. Context from cluster state and GitHub repository has been collected for analysis."
+}
+    </code></pre>
+
+    <h3>Example 2: Proxmox VM Deployment (No Repository)</h3>
+    <pre><code>
+{
+  <span class="comment">// A simpler request with no repository context.</span>
+  "request_details": {
+    "original_chat": "I need a new web server VM named prod-web-01. Please clone it from the standard ubuntu template, ID 9001.",
+    "extracted_parameters": {
+      "name": "prod-web-01",
+      "template_id": 9001
+    }
+  },
+  "platform_target": "Proxmox",
+  <span class="comment">// "Ground truth" from the Proxmox cluster API.</span>
+  "infrastructure_state": {
+    "nodes": [
+      {"name": "pve-node-1", "status": "online", "available_cpu": 8, "available_memory_gb": 64},
+      {"name": "pve-node-2", "status": "online", "available_cpu": 12, "available_memory_gb": 96}
+    ],
+    "storage_pools": [
+      {"name": "local-lvm", "type": "lvmthin", "available_gb": 450},
+      {"name": "ceph-main", "type": "rbd", "available_gb": 8200}
+    ],
+    <span class="comment">// This list is used to validate that template 9001 actually exists.</span>
+    "available_templates": [
+      {"vmid": 9001, "name": "ubuntu-2204-cloudinit-template"},
+      {"vmid": 9002, "name": "debian-12-cloudinit-template"}
+    ]
+  },
+  <span class="comment">// The application_context is null when no repository is provided.</span>
+  "application_context": null,
+  "summary_message": "Validated request to provision VM 'prod-web-01' on Proxmox by cloning template 9001. Context from cluster state has been collected for analysis."
+}
+    </code></pre>
+
+</body>
+</html>
