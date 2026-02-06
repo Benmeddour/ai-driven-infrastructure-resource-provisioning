@@ -26,7 +26,7 @@ These patterns are foundational for building production-ready AI systems in infr
 
 ## Pattern 1: ReAct with Critique & Rollback
 
-![ReAct Feedback Loop](../../../../images/react_pattern_1.png)
+![ReAct Feedback Loop](./Images/ai_agent_arch.png)
 
 **Flow:**
 ```
@@ -49,7 +49,7 @@ Input → AI Agent → ReAct Framework → LLM Critique → Test Result
 
 ## Pattern 2: Observation → Decision → Action (Meeting Example)
 
-![Task: Host a Meeting](../../../../images/react_pattern_2.png)
+![Task: Host a Meeting](./images/How_ai_agent_work.png)
 
 **Task:** Host a meeting based on email details
 
@@ -77,7 +77,7 @@ Input → AI Agent → ReAct Framework → LLM Critique → Test Result
 
 ## Pattern 3: Native Skills vs. External Tools (Translation Example)
 
-![Task: Translate](../../../../images/react_pattern_3.png)
+![Task: Translate](./images/human_algo_for_doing_tasks.png)
 
 **Task:** Translate English document to Arabic
 
@@ -125,6 +125,4 @@ These patterns apply to Smart Resource Provisioning (SRP):
 - AgentOps framework for production AI agents
 - ReAct (Reasoning and Acting) pattern for LLMs
 - Tool calling and function execution in agent systems
-
-## Reference
 - **AgentOps Tutorial**: https://youtu.be/DDR4A8-MLQs?list=LL
