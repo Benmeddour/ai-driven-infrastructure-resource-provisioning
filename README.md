@@ -60,7 +60,6 @@ PFE2025-RSD/
 
 **🎓 Full Thesis:** Available in [English](Pfe_30_RSD_EN.pdf) and [French](Pfe_30_RSD_FR.pdf)
 
----
 
 ## ✨ Key Features
 
@@ -270,7 +269,6 @@ terraform init && terraform apply
 - Terraform CLI
 - Network with VLAN support
 
----
 
 ## 📚 Deep Dive
 
@@ -290,13 +288,33 @@ Want to understand how everything works?
 
 ### 📖 Project Wiki
 
-**[📚 Comprehensive Wiki →](https://github.com/Benmeddour/ai-driven-infrastructure-resource-provisioning/wiki)**
+The **[project wiki](https://github.com/Benmeddour/ai-driven-infrastructure-resource-provisioning/wiki)** is your shortcut to understanding the entire technology stack. Instead of reading through multiple vendor docs, we've created concise, practical guides for every tool used in this thesis.
 
-In-depth guides, tutorials, and documentation including:
-- Detailed setup walkthroughs
-- Architecture deep-dives
-- Troubleshooting guides
-- Best practices and tips
+**Why visit the wiki?** It dramatically shortens your learning path with focused documentation on:
+
+**🤖 Core Technologies:**
+- **[AI Agent](https://github.com/Benmeddour/ai-driven-infrastructure-resource-provisioning/wiki/AI-agent)** - Multi-agent system architecture and design patterns
+- **[Terraform](https://github.com/Benmeddour/ai-driven-infrastructure-resource-provisioning/wiki/Terraform)** - Infrastructure as Code fundamentals
+- **[Terraform with Ansible](https://github.com/Benmeddour/ai-driven-infrastructure-resource-provisioning/wiki/Terraform-with-Ansible:-A-Powerful-Duo-for-Infrastructure-Management)** - How they work together
+- **[Kubernetes](https://github.com/Benmeddour/ai-driven-infrastructure-resource-provisioning/wiki/Kubernetes)** - Container orchestration essentials
+
+**🏗️ Infrastructure Components:**
+- **[Ceph](https://github.com/Benmeddour/ai-driven-infrastructure-resource-provisioning/wiki/Ceph)** - Distributed storage setup and configuration
+- **[Proxmox SDN](https://github.com/Benmeddour/ai-driven-infrastructure-resource-provisioning/wiki/Proxmox-SDN:-The-Comprehensive-Guide-to-Advanced-Virtual-Networking)** - Advanced virtual networking guide
+- **[Packer and Cloud-Init](https://github.com/Benmeddour/ai-driven-infrastructure-resource-provisioning/wiki/Packer-and-Cloud%E2%80%90Init:-Revolutionizing-Template-Creation-for-Scalable,-Seamless-Deployments)** - Template creation strategies
+- **[pfSense vs. OPNsense](https://github.com/Benmeddour/ai-driven-infrastructure-resource-provisioning/wiki/pfSense-vs.-OPNsense:-A-Comparison-of-Open%E2%80%90Source-Firewalls)** - Firewall options compared
+
+**📊 Observability & Advanced Topics:**
+- **[Grafana + Prometheus](https://github.com/Benmeddour/ai-driven-infrastructure-resource-provisioning/wiki/Grafana---premotheus)** - Monitoring stack setup
+- **[Helm](https://github.com/Benmeddour/ai-driven-infrastructure-resource-provisioning/wiki/Helm)** - Kubernetes package management
+- **[Kube Resource Orchestrator (KRO)](https://github.com/Benmeddour/ai-driven-infrastructure-resource-provisioning/wiki/Kube-Resource-Orchestrator(KRO))** - Advanced K8s orchestration
+- **[Talos Linux](https://github.com/Benmeddour/ai-driven-infrastructure-resource-provisioning/wiki/Talos-Linux)** - Immutable Kubernetes OS
+
+**💡 Concepts & Best Practices:**
+- **[Imperative vs Declarative Programming](https://github.com/Benmeddour/ai-driven-infrastructure-resource-provisioning/wiki/Imperative-vs-Declarative-Programming)** - IaC philosophy explained
+- **[Documentation in IT](https://github.com/Benmeddour/ai-driven-infrastructure-resource-provisioning/wiki/Documentation-in-IT)** - Why documentation matters
+
+**Each page provides practical, hands-on guidance tailored to this project's implementation.** Perfect for quickly getting up to speed without wading through official documentation.
 
 ### Research Materials
 
