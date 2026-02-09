@@ -1,6 +1,6 @@
-# 🤖 AI-Driven Infrastructure Automation for Proxmox
+# 🤖 Intelligent Infrastructure Provisioning with Multi-Agent AI
 
-> **What if infrastructure could provision itself intelligently?**
+**Autonomous AI agents that analyze clusters and generate optimized infrastructure configurations.**
 
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](LICENSE)
 [![Thesis](https://img.shields.io/badge/Type-Master's%20Thesis-green.svg)](README.md)
@@ -8,43 +8,79 @@
 [![Status](https://img.shields.io/badge/Status-Research%20%26%20Development-orange.svg)](README.md)
 
 
+## 💡 Overview
+
+This Master's thesis project demonstrates how **multi-agent AI systems powered by Google Gemini** can transform infrastructure provisioning. Instead of manually configuring VMs through trial and error, simply describe what you need in plain language—our AI agents analyze your Proxmox cluster in real-time, predict optimal resource allocations based on workload type, and generate production-ready Terraform configurations.
+
+**The result?** From chat message to running VM in ~30 seconds, with optimal resource sizing.
+
 ![Complete Infrastructure Stack](./images/Globale-Implementation-diagram.drawio.png)
 
----
 
-## 💡 The Big Idea
+## 📂 Repository Structure
 
-**Stop manually sizing VMs. Let AI do it for you.**
-
-This Master's thesis project demonstrates how **multi-agent AI systems** can replace manual infrastructure provisioning with intelligent, automated decision-making. Simply tell our system what you need, and watch it analyze your cluster, predict optimal resources, and deploy production-ready VMs—all automatically.
+This repository is **more than just code**—it's a complete research journey:
 
 ```
-"I need a web server" → 30 seconds later → ✅ Optimally-configured VM running
+PFE2025-RSD/
+├── ai_agent/                                    # 🤖 AI Agent Implementations
+│   ├── agent_withADK/
+│   │   └── first_trial_agent/                   # Initial single-agent prototype
+│   └── Proxmox-Smart-Provisioning-Agent-withADK/ # Multi-agent system (FINAL)
+│
+├── other_ansible_script/                        # 🔧 Infrastructure Automation
+│   ├── proxmox/                                 # Proxmox cluster management
+│   ├── k8s/                                     # Kubernetes node setup
+│   └── roles/                                   # Ansible roles for automation
+│
+├── k3s_cluster_creation_with_ansible_script/    # ☸️ K3s Deployment
+│   └── (Modified techno-tim/k3s-ansible playbook)
+│
+├── terraform_script/                            # 🏗️ Terraform VM Provisioning
+│   └── create_new_vm_using_terraform.tf
+│
+├── diagrams/                                    # 📐 Architecture Diagrams
+│   ├── Main_diagrams.drawio                     # Master thesis diagrams
+│   └── (templates for reuse)
+│
+├── Documents/                                   # 📚 Complete Documentation Archive
+│   ├── ThesisSheets/                            # Academic research documentation
+│   ├── helpfull/                                # Practical Proxmox guides
+│   └── helpfull-research-paper/                 # Academic reference papers
+│
+└── images/                                      # 🖼️ Reference Images & Screenshots
 ```
 
-### 🎓 Academic Context
-**Master's Thesis (PFE 2025)** | Computer Science - Networking & Distributed Systems  
-📄 [Read the full thesis (English)](./Pfe_30_RSD_EN.pdf) | [Lire en français](./Pfe_30_RSD_FR.pdf)
+**📚 Key Components:**
+- **AI Agents** - Three iterations showing the evolution from prototype to production system
+- **Automation Scripts** - Ansible playbooks for complete infrastructure setup
+- **Terraform Configs** - Infrastructure as Code for VM provisioning
+- **Documentation** - Complete thesis documentation and practical guides
+- **Diagrams** - Architecture visualizations and workflow diagrams
+
+**🎓 Full Thesis:** Available in [English](Pfe_30_RSD_EN.pdf) and [French](Pfe_30_RSD_FR.pdf)
 
 ---
 
-## 🎯 What Makes This Different?
+## ✨ Key Features
 
-### Traditional Provisioning ❌
-- Manual resource guessing based on generic guidelines
-- Switching between Proxmox UI, Terraform, monitoring tools
-- Trial-and-error: deploy → test → resize → repeat
-- No learning from past deployments
-- **Result:** Slow, inefficient, error-prone
+**What can this system do?**
 
-### Our AI-Powered Approach ✅
-- **Intelligent analysis** of real-time cluster state
-- **Workload-aware predictions** (web, database, app servers)
-- **Automatic Terraform generation** with optimal configs
-- **Learns from cluster patterns** to select best nodes
-- **Result:** Fast, optimal, automated
+- 🗣️ **Natural Language Input** - Describe infrastructure needs in plain English
+- 🔍 **Real-Time Cluster Analysis** - Scans Proxmox nodes for current resource utilization
+- 🧠 **Intelligent Resource Prediction** - Workload-aware sizing (web servers vs. databases)
+- 🎯 **Optimal Node Selection** - Chooses the best host based on available capacity
+- 📝 **Production-Ready Terraform** - Generates complete, validated IaC configurations
+- 🔄 **Iterative Refinement** - Self-improves through 10 review cycles
+- 🏗️ **Multi-Agent Coordination** - Five specialized agents working in harmony
+- 📊 **Complete Observability** - Integrated monitoring and HA configurations
 
----
+**Example Use Cases:**
+- "I need a PostgreSQL database for 100 concurrent users" → Optimized DB server config
+- "Deploy a web application with load balancing" → Multi-VM setup with networking
+- "Create a development environment" → Right-sized resources without over-provisioning
+
+
 
 ## 🚀 How It Works
 
@@ -108,7 +144,23 @@ Our system uses **5 specialized AI agents** working together:
 
 **The Magic:** Gemini 2.5 Pro analyzes workload patterns and knows that a PostgreSQL database needs more RAM than a static web server—automatically.
 
----
+
+## 🎯 What Makes This Different?
+
+### Traditional Provisioning ❌
+- Manual resource guessing based on generic guidelines
+- Switching between Proxmox UI, Terraform, monitoring tools
+- Trial-and-error: deploy → test → resize → repeat
+- No learning from past deployments
+- **Result:** Slow, inefficient, error-prone
+
+### Our AI-Powered Approach ✅
+- **Intelligent analysis** of real-time cluster state
+- **Workload-aware predictions** (web, database, app servers)
+- **Automatic Terraform generation** with optimal configs
+- **Learns from cluster patterns** to select best nodes
+- **Result:** Fast, optimal, automated
+
 
 ## 🏆 What We Achieved
 
@@ -127,7 +179,6 @@ This thesis breaks new ground in **AI-driven infrastructure automation**:
 
 **Keywords:** Multi-Agent Systems, Infrastructure as Code, LLMs, Proxmox, Kubernetes, Intelligent Provisioning
 
----
 
 ## 🛠️ Technology Stack
 
@@ -157,75 +208,7 @@ This thesis breaks new ground in **AI-driven infrastructure automation**:
 - **Bash** - Automation glue
 - **YAML/HCL** - Configuration languages
 
----
 
-## 📂 What's Inside?
-
-This repository is **more than just code**—it's a complete research journey:
-
-### 🤖 AI Agents (`ai_agent/`)
-- **First Trial** - Where it all began (simple data collector)
-- **Second Iteration** - Added intelligence
-- **Final System** - Production-ready multi-agent orchestration
-
-### 🔧 Automation (`other_ansible_script/` + `k3s_cluster_creation/`)
-- Proxmox cluster setup and management
-- Network configuration (SDN, OVS, VLANs)
-- K3s HA cluster deployment
-- VM template creation
-
-### 🏗️ Infrastructure as Code (`terraform_script/`)
-- Example Terraform configurations
-- Cloud-init templates
-- HA and networking setup
-
-### 📚 Documentation (`Documents/`)
-- **ThesisSheets/** - Complete academic documentation
-  - All 3 agent iterations documented
-  - Architecture designs and diagrams
-  - Implementation strategies
-  - Lessons learned
-- **helpfull/** - Practical Proxmox guides
-- **helpfull-research-paper/** - Academic papers that informed this work
-
-### 📐 Diagrams (`diagrams/`)
-- System architecture visuals
-- Multi-agent workflow diagrams
-- Network topology
-
-**🎓 Bonus:** Full thesis in [English](Pfe_30_RSD_EN.pdf) and [French](Pfe_30_RSD_FR.pdf)
-
-### 📂 Repository Structure
-
-```
-PFE2025-RSD/
-├── ai_agent/                                    # 🤖 AI Agent Implementations
-│   ├── agent_withADK/
-│   │   └── first_trial_agent/                   # Initial single-agent prototype
-│   └── Proxmox-Smart-Provisioning-Agent-withADK/ # Multi-agent system (FINAL)
-│
-├── other_ansible_script/                        # 🔧 Infrastructure Automation
-│   ├── proxmox/                                 # Proxmox cluster management
-│   ├── k8s/                                     # Kubernetes node setup
-│   └── roles/                                   # Ansible roles for automation
-│
-├── k3s_cluster_creation_with_ansible_script/    # ☸️ K3s Deployment
-│   └── (Modified techno-tim/k3s-ansible playbook)
-│
-├── terraform_script/                            # 🏗️ Terraform VM Provisioning
-│   └── create_new_vm_using_terraform.tf
-│
-├── diagrams/                                    # 📐 Architecture Diagrams
-│   ├── Main_diagrams.drawio                     # Master thesis diagrams
-│   └── (templates for reuse)
-│
-├── Documents/                                   # 📚 Complete Documentation Archive
-│   ├── ThesisSheets/                            # Academic research documentation
-│   ├── helpfull/                                # Practical Proxmox guides
-│   └── helpfull-research-paper/                 # Academic reference papers
-│
-└── images/                                      # 🖼️ Reference Images & Screenshots
-```
 
 ---
 
@@ -337,6 +320,42 @@ In-depth guides, tutorials, and documentation including:
 - **[terraform-proxmox-automatic-vm-provisioning](https://github.com/Benmeddour/terraform-proxmox-automatic-vm-provisioning)** - Extended Terraform configs
 - **[techno-tim/k3s-ansible](https://github.com/techno-tim/k3s-ansible)** - Original K3s playbook (we modified it)
 
+## 🔮 Future Work
+
+While this thesis demonstrates a working proof-of-concept, several enhancements could take it further:
+
+### 🎯 Immediate Improvements
+- **Cost Optimization** - Factor in energy costs and hardware efficiency when selecting nodes
+- **Multi-Cloud Support** - Extend beyond Proxmox to support VMware, OpenStack, AWS
+- **Historical Learning** - Build a database of past deployments to improve predictions
+- **Auto-Deployment Integration** - Execute Terraform apply automatically (currently generates only)
+
+### 🧠 AI & Intelligence
+- **Fine-Tuned Models** - Train custom models on infrastructure-specific data
+- **Reinforcement Learning** - Learn from deployment successes/failures over time
+- **Anomaly Detection** - AI agents that predict and prevent resource bottlenecks
+- **Natural Language Refinement** - Interactive chat to iteratively refine configurations
+
+### 🏗️ Architecture & Scale
+- **Distributed Agent System** - Scale agents across multiple control nodes
+- **Federation Support** - Manage multiple Proxmox clusters from one interface
+- **GitOps Integration** - Automatic PR creation with generated Terraform configs
+- **Policy Engine** - Organizational constraints (budget limits, compliance rules)
+
+### 🔐 Production Readiness
+- **Security Hardening** - Vault integration, encrypted secrets, audit trails
+- **RBAC & Multi-Tenancy** - Different teams with isolated environments
+- **SLA-Aware Provisioning** - Guarantee performance characteristics
+- **Disaster Recovery** - Automated backup and failover configurations
+
+### 📊 Observability & Feedback
+- **Real-Time Metrics** - Live dashboard showing AI decision-making process
+- **Prediction Accuracy Tracking** - Measure how often AI sizing is optimal
+- **A/B Testing Framework** - Compare AI predictions vs. manual configurations
+- **User Feedback Loop** - Capture operator corrections to improve the system
+
+**These ideas are documented in [Documents/ThesisSheets/](Documents/ThesisSheets/) and represent exciting research directions.**
+
 ---
 
 ## ⚠️ Important Notices
@@ -368,8 +387,6 @@ What makes this special? We kept **everything**:
 
 **This isn't just a thesis deliverable—it's a research story.**
 
----
-
 ## 🤝 Get Involved
 
 This is an academic project, but feedback is welcome!
@@ -381,8 +398,6 @@ This is an academic project, but feedback is welcome!
 
 Not looking for code contributions, but **feedback on the approach and architecture is gold.**
 
----
-
 ## 📜 Legal Stuff
 
 **License:** Apache 2.0 - Use it, learn from it, build on it  
@@ -392,4 +407,4 @@ Not looking for code contributions, but **feedback on the approach and architect
 - 📄 [Complete thesis (English)](Pfe_30_RSD_EN.pdf)
 - 📄 [Thèse complète (Français)](Pfe_30_RSD_FR.pdf)
 
----
+
