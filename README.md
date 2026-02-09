@@ -24,7 +24,7 @@ This Master's thesis project demonstrates how **multi-agent AI systems** can rep
 
 ### 🎓 Academic Context
 **Master's Thesis (PFE 2025)** | Computer Science - Networking & Distributed Systems  
-📄 [Read the full thesis (English)](Pfe_30_RSD_EN.pdf) | [Lire en français](Pfe_30_RSD_FR.pdf)
+📄 [Read the full thesis (English)](./Pfe_30_RSD_EN.pdf) | [Lire en français](./Pfe_30_RSD_FR.pdf)
 
 ---
 
