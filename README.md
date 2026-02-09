@@ -1,167 +1,176 @@
-# PFE2025-RSD - AI-Driven Infrastructure Automation for Proxmox
+# 🤖 AI-Driven Infrastructure Automation for Proxmox
+
+> **What if infrastructure could provision itself intelligently?**
 
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](LICENSE)
 [![Thesis](https://img.shields.io/badge/Type-Master's%20Thesis-green.svg)](README.md)
 [![Year](https://img.shields.io/badge/Year-2024--2025-orange.svg)](README.md)
-
-## 📖 Project Overview
-
-**Master's Thesis (PFE 2025)** | **Computer Science - Networking & Distributed Systems**
-
-This repository contains the complete implementation and research artifacts for a Master's thesis on combining **AI-powered decision-making with traditional infrastructure automation** for Proxmox virtualization environments.
-
-### 📄 Master Thesis Documents
-
-- **[Pfe_30_RSD_EN.pdf](Pfe_30_RSD_EN.pdf)** - Complete thesis in **English**
-- **[Pfe_30_RSD_FR.pdf](Pfe_30_RSD_FR.pdf)** - Complete thesis in **French**
-
-### 🎯 The Core Innovation
-
-**Title:** Design and Implementation of an Automated and Scalable Deployment and Provisioning Solution
-
-Instead of manually configuring virtual machines, our system uses **multi-agent AI** (Google ADK + Gemini models) to:
-1. Analyze Proxmox cluster state in real-time
-2. Predict optimal resources based on workload patterns
-3. Generate production-ready Terraform configurations
-4. Deploy VMs automatically with intelligent resource allocation
-
-**The Result:** An intelligent infrastructure provisioning system that combines:
-- **AI-Driven Intelligence** - Multi-agent system for smart decision-making
-- **Bare-Metal Virtualization** - Proxmox VE with HA and distributed storage
-- **Container Orchestration** - Kubernetes (K3s) for cloud-native workloads
-- **Infrastructure as Code** - Terraform and Ansible for automated deployment
+[![Status](https://img.shields.io/badge/Status-Research%20%26%20Development-orange.svg)](README.md)
 
 ---
 
-## 🎓 Academic Information
+## 💡 The Big Idea
 
-- **Project**: PFE2025-RSD (Projet de Fin d'Études)
-- **Type**: Master's Thesis
-- **Year**: 2024-2025
-- **Field**: Computer Science - Networking and Distributed Systems
-- **Topic**: AI-Driven Infrastructure Automation for Proxmox Virtualization Environments
-- **Keywords**: Multi-Agent Systems, Infrastructure as Code, LLMs, Proxmox, Kubernetes, Intelligent Resource Provisioning
+**Stop manually sizing VMs. Let AI do it for you.**
 
----
-
-## 🚨 The Problem
-
-Traditional VM provisioning on virtualization platforms requires:
-
-- **Manual resource sizing** - Guesswork based on generic guidelines
-- **Deep infrastructure knowledge** - Understanding cluster utilization, storage availability, network configuration
-- **Multiple tool interactions** - Switching between Proxmox UI, Terraform, manual optimization
-- **Trial-and-error approach** - Deploy, monitor, resize, repeat
-- **No intelligence** - Cannot learn from workload patterns or cluster state
-
-**Result:** Slow provisioning times, sub-optimal resource allocation, increased operational overhead, and potential resource waste or performance issues.
-
----
-
-## 💡 Our Solution
-
-A **multi-agent AI system** that intelligently automates the entire provisioning workflow:
-
-### How It Works
+This Master's thesis project demonstrates how **multi-agent AI systems** can replace manual infrastructure provisioning with intelligent, automated decision-making. Simply tell our system what you need, and watch it analyze your cluster, predict optimal resources, and deploy production-ready VMs—all automatically.
 
 ```
-┌─────────────────────────────────────────────────────────────┐
-│  User: "I need a web server VM"                             │
-└─────────────────────┬───────────────────────────────────────┘
-                      ↓
-┌─────────────────────────────────────────────────────────────┐
-│  🤖 AI Multi-Agent System (Google ADK + Gemini)             │
-│  ├─→ Chat Validator: Extract requirements                   │
-│  ├─→ Data Collector: Gather cluster state via API           │
-│  ├─→ Manifest Generator: Predict optimal resources          │
-│  │    (Gemini 2.5 Pro analyzes workload type)               │
-│  └─→ Refinement Loop: Perfect Terraform config (10 iters)   │
-└─────────────────────┬───────────────────────────────────────┘
-                      ↓
-┌─────────────────────────────────────────────────────────────┐
-│  📄 Generated Terraform Configuration                        │
-│  - Optimal node selection based on utilization              │
-│  - Right-sized resources for workload type                  │
-│  - Network, storage, HA configuration                       │
-└─────────────────────┬───────────────────────────────────────┘
-                      ↓
-┌─────────────────────────────────────────────────────────────┐
-│  🚀 Automated Deployment (Terraform + Ansible)               │
-│  - VM provisioned on Proxmox cluster                        │
-│  - Cloud-init configuration applied                         │
-│  - Monitoring and HA enabled                                │
-└─────────────────────┬───────────────────────────────────────┘
-                      ↓
-                  ✅ Running VM
+"I need a web server" → 30 seconds later → ✅ Optimally-configured VM running
 ```
 
-### System Architecture Diagram
-
-![Proxmox VE Cluster Architecture](images/Globale-Implementation-diagram.drawio.png)
-
-**Complete Infrastructure Overview:**
-- **Proxmox VE Cluster** with 3 homogeneous physical servers
-- **Ceph Hyper-Converged Storage** (RBD/CephFS) for resilient data storage
-- **Proxmox SDN VNet** (mainvnet 192.168.0.0/16) for network isolation
-- **K3s HA Kubernetes Cluster** with 3 master nodes and 2 worker nodes
-- **AI-Server** running Google ADK with Gemini AI models
-- **Open vSwitch (OVS)** for advanced network management
-- **Router + DHCP** (OPNsense) for network services
-- **Monitoring Stack** (Prometheus + Grafana) for observability
-- **Automation Layer** (Terraform + Ansible) for IaC deployment
-- **MetalLB** for service load balancing
-- **Helm** for Kubernetes package management
-
-[See detailed architecture diagrams →](diagrams/)
+### 🎓 Academic Context
+**Master's Thesis (PFE 2025)** | Computer Science - Networking & Distributed Systems  
+📄 [Read the full thesis (English)](Pfe_30_RSD_EN.pdf) | [Lire en français](Pfe_30_RSD_FR.pdf)
 
 ---
 
-## 🎯 Research Objectives & Contributions
+## 🎯 What Makes This Different?
 
-### What We Aimed to Achieve
+### Traditional Provisioning ❌
+- Manual resource guessing based on generic guidelines
+- Switching between Proxmox UI, Terraform, monitoring tools
+- Trial-and-error: deploy → test → resize → repeat
+- No learning from past deployments
+- **Result:** Slow, inefficient, error-prone
 
-1. **Intelligent Resource Allocation** - AI-driven VM sizing based on workload prediction
-2. **Multi-Agent Orchestration** - Coordinated agents for validation, data collection, and provisioning
-3. **Automated Infrastructure Management** - End-to-end automation from user request to deployed VM
-4. **Infrastructure as Code Integration** - Generate Terraform configurations dynamically
-
-### What We Delivered
-
-This thesis contributes:
-
-1. ✅ **Multi-Agent Architecture** for infrastructure automation
-2. ✅ **Intelligent Workload Prediction** using LLMs (Gemini 2.5 Pro)
-3. ✅ **Integration Patterns** between AI agents and IaC tools (Terraform/Ansible)
-4. ✅ **Iterative Refinement Loop** for configuration quality (up to 10 iterations)
-5. ✅ **Real-World Implementation** on production-grade platforms (4-node Proxmox cluster)
-6. ✅ **Complete Research Journey** - Documented iterations, trials, and lessons learned
+### Our AI-Powered Approach ✅
+- **Intelligent analysis** of real-time cluster state
+- **Workload-aware predictions** (web, database, app servers)
+- **Automatic Terraform generation** with optimal configs
+- **Learns from cluster patterns** to select best nodes
+- **Result:** Fast, optimal, automated
 
 ---
 
-## 🏗️ System Architecture
+## 🚀 How It Works
 
-Our solution uses an **8-layer architecture** that integrates cutting-edge AI with enterprise infrastructure:
+**Chat with AI → Get optimized infrastructure**
 
-![System Architecture Overview](images/Globale-Implementation-diagram.drawio.png)
+```mermaid
+graph LR
+    A[💬 User Request] --> B[🤖 AI Agents]
+    B --> C[🔍 Analyze Cluster]
+    C --> D[🧠 Predict Resources]
+    D --> E[📄 Generate Terraform]
+    E --> F[🚀 Deploy VM]
+    F --> G[✅ Running & Optimized]
+```
 
-### Architecture Layers
+### Behind the Scenes: Multi-Agent Orchestra
 
-| Layer | Technology | Purpose |
-|-------|-----------|---------|
-| **🤖 AI Intelligence** | Google ADK + Gemini | Analyzes infrastructure, predicts resources, generates IaC |
-| **💻 Virtualization** | Proxmox VE + Ceph | Bare-metal platform with distributed storage and HA |
-| **📦 Orchestration** | K3s + Helm | Lightweight Kubernetes for container workloads |
-| **🔧 Automation** | Terraform + Ansible | Infrastructure as Code for repeatable deployments |
-| **🌐 Networking** | OVS + SDN | Software-defined networking with VLAN isolation |
-| **💾 Storage** | Ceph Cluster | Distributed block and file storage across nodes |
-| **📊 Monitoring** | Prometheus + Grafana | Real-time metrics and observability |
-| **🎯 Management** | Rancher | Centralized Kubernetes cluster management |
+Our system uses **5 specialized AI agents** working together:
 
-📐 [View detailed architecture documentation →](Documents/ThesisSheets/global-Architecture/)
+1. **💬 Chat Validator** - Understands what you need ("web server" → specific requirements)
+2. **📊 Data Collector** - Scans your Proxmox cluster in real-time (nodes, storage, network)
+3. **🧠 Manifest Generator** - Uses Gemini 2.5 Pro to predict optimal resources
+4. **🔍 Reviewer Agent** - Ensures configuration quality
+5. **✨ Refiner Agent** - Perfects the Terraform output (up to 10 iterations)
+
+**The Magic:** Gemini 2.5 Pro analyzes workload patterns and knows that a PostgreSQL database needs more RAM than a static web server—automatically.
+
+### Live Architecture
+
+![Complete Infrastructure Stack](./images/Globale-Implementation-diagram.drawio.png)
+
+**What's Running:**
+- 🖥️ **4-node Proxmox VE cluster** with high availability
+- 💾 **Ceph hyper-converged storage** for data resilience
+- ☸️ **K3s Kubernetes** (3 masters + 2 workers)
+- 🤖 **AI server** running Google ADK + Gemini
+- 📊 **Full monitoring** (Prometheus + Grafana)
+- 🌐 **SDN networking** with Open vSwitch
+
+[Explore architecture details →](diagrams/)
 
 ---
 
-## 📂 Repository Structure
+## 🏆 What We Achieved
+
+### Research Contributions
+
+This thesis breaks new ground in **AI-driven infrastructure automation**:
+
+| Contribution | Impact |
+|-------------|--------|
+| 🏗️ **Multi-Agent Architecture** | First implementation of coordinated AI agents for infrastructure provisioning |
+| 🧠 **Intelligent Workload Prediction** | LLMs can accurately predict optimal resources based on workload types |
+| 🔗 **AI + IaC Integration** | Proven patterns for connecting AI decision-making with Terraform/Ansible |
+| 🔄 **Iterative Refinement** | Self-improving system that perfects configurations through 10 iterations |
+| ⚡ **Production Deployment** | Actually works on real 4-node Proxmox cluster, not just theory |
+| 📚 **Complete Journey** | Documented all iterations—successes AND failures |
+
+**Keywords:** Multi-Agent Systems, Infrastructure as Code, LLMs, Proxmox, Kubernetes, Intelligent Provisioning
+
+---
+
+## 🛠️ Technology Stack
+
+### The AI Brain 🧠
+- **Google Agent Development Kit (ADK)** - Multi-agent orchestration framework
+- **Gemini 2.0 Flash** - Lightning-fast inference for 4/5 agents
+- **Gemini 2.5 Pro** - Heavy-duty reasoning for resource predictions
+
+### The Infrastructure Foundation 💻
+- **Proxmox VE** - Enterprise-grade bare-metal virtualization
+- **Ceph** - Distributed storage across nodes (no single point of failure)
+- **K3s** - Lightweight Kubernetes (perfect for edge deployments)
+- **Open vSwitch** - Software-defined networking with VLAN isolation
+
+### The Automation Layer 🔧
+- **Terraform** - Declarative infrastructure as code
+- **Ansible** - Configuration management and orchestration
+- **Helm** - Kubernetes package manager
+
+### The Observability Stack 📊
+- **Prometheus** - Metrics collection and alerting
+- **Grafana** - Beautiful dashboards and visualization
+- **Rancher** - Kubernetes cluster management UI
+
+### Development 💾
+- **Python 3.8+** - AI agent implementation
+- **Bash** - Automation glue
+- **YAML/HCL** - Configuration languages
+
+---
+
+## 📂 What's Inside?
+
+This repository is **more than just code**—it's a complete research journey:
+
+### 🤖 AI Agents (`ai_agent/`)
+- **First Trial** - Where it all began (simple data collector)
+- **Second Iteration** - Added intelligence
+- **Final System** - Production-ready multi-agent orchestration
+
+### 🔧 Automation (`other_ansible_script/` + `k3s_cluster_creation/`)
+- Proxmox cluster setup and management
+- Network configuration (SDN, OVS, VLANs)
+- K3s HA cluster deployment
+- VM template creation
+
+### 🏗️ Infrastructure as Code (`terraform_script/`)
+- Example Terraform configurations
+- Cloud-init templates
+- HA and networking setup
+
+### 📚 Documentation (`Documents/`)
+- **ThesisSheets/** - Complete academic documentation
+  - All 3 agent iterations documented
+  - Architecture designs and diagrams
+  - Implementation strategies
+  - Lessons learned
+- **helpfull/** - Practical Proxmox guides
+- **helpfull-research-paper/** - Academic papers that informed this work
+
+### 📐 Diagrams (`diagrams/`)
+- System architecture visuals
+- Multi-agent workflow diagrams
+- Network topology
+
+**🎓 Bonus:** Full thesis in [English](Pfe_30_RSD_EN.pdf) and [French](Pfe_30_RSD_FR.pdf)
+
+### 📂 Repository Structure
 
 ```
 PFE2025-RSD/
@@ -195,308 +204,167 @@ PFE2025-RSD/
 
 ---
 
-## 🚀 Key Components
+## ⚡ Quick Start
 
-Our system integrates multiple components working together to achieve intelligent automation:
+Want to try it yourself? Here's how:
 
-### 1. AI Agent System ([ai_agent/](ai_agent/))
-
-**Multi-Agent Architecture for Intelligent VM Provisioning**
-
-- **Manager Agent** - Orchestrates workflow between agents
-- **Chat Validation Agent** - Validates and extracts user requirements
-- **Data Collection Agent** - Gathers Proxmox cluster state via API
-- **Manifest Generator Agent** - Uses Gemini 2.5 Pro for intelligent resource prediction
-- **Refinement Loop** - Reviewer + Refiner agents ensure quality Terraform output
-
-**Key Features:**
-- Workload-based resource prediction (web, database, app servers)
-- Cluster optimization (node selection based on utilization)
-- Iterative refinement (up to 10 iterations)
-- Production-ready Terraform file generation
-
-📄 [See detailed README](ai_agent/Readme.md)
-
-### 2. Ansible Automation ([other_ansible_script/](other_ansible_script/))
-
-**Infrastructure Automation Playbooks**
-
-**Proxmox Management:**
-- Cluster initialization
-- Network configuration (Open vSwitch, VLANs)
-- VM template creation
-- API token setup for Terraform
-
-**Kubernetes Setup:**
-- K3s node preparation
-- System configuration
-
-📄 [See detailed README](other_ansible_script/README.md)
-
-### 3. K3s Cluster Deployment ([k3s_cluster_creation_with_ansible_script/](k3s_cluster_creation_with_ansible_script/))
-
-**High-Availability Kubernetes Cluster**
-
-Modified open-source playbook for:
-- HA K3s cluster with etcd
-- Kube-vip load balancing
-- MetalLB service exposure
-
-**Original Source:** [techno-tim/k3s-ansible](https://github.com/techno-tim/k3s-ansible)
-
-📄 [See detailed README](k3s_cluster_creation_with_ansible_script/README.md)
-
-### 4. Terraform Configurations ([terraform_script/](terraform_script/))
-
-**Proxmox VM Provisioning with IaC**
-
-Example Terraform configurations for:
-- Cloud-init VM deployment
-- Network and storage configuration
-- HA setup
-
-**Related Repository:** [terraform-proxmox-automatic-vm-provisioning](https://github.com/Benmeddour/terraform-proxmox-automatic-vm-provisioning)
-
-📄 [See detailed README](terraform_script/README.md)
-
-### 5. Architecture Diagrams ([diagrams/](diagrams/))
-
-Visual representations of:
-- System architecture
-- Multi-agent workflows
-- Infrastructure topology
-- Network design
-
-📄 [See detailed README](diagrams/README.md)
-
----
-
-## 🛠️ Technology Stack
-
-### AI & Automation
-- **Google Agent Development Kit (ADK)** - Multi-agent framework
-- **Gemini 2.0 Flash** - Fast inference for most agents
-- **Gemini 2.5 Pro** - Advanced reasoning for resource planning and workload prediction
-
-### Infrastructure as Code
-- **Terraform** (>= 0.14) - Declarative VM provisioning
-- **Ansible** (>= 2.9) - Configuration management and automation
-
-### Virtualization & Orchestration
-- **Proxmox VE** (API v2) - Bare-metal virtualization platform
-- **K3s** - Lightweight Kubernetes distribution
-- **Ceph** - Distributed storage (SDS) for high availability
-- **Open vSwitch (OVS)** - Software-defined networking
-
-### Monitoring & Management
-- **Prometheus** - Metrics collection and alerting
-- **Grafana** - Visualization and dashboards
-- **Rancher** - Kubernetes cluster management UI
-- **Helm** - Kubernetes package manager
-
-### Languages & Tools
-- **Python 3.8+** - AI agent implementation
-- **Bash** - Automation scripts
-- **YAML/HCL** - Configuration files
-
----
-
-## 📋 Prerequisites
-
-### For AI Agents
-- Google Cloud account with Gemini API access
-- Python 3.8+ with required packages
-- Proxmox VE cluster access
-
-### For Infrastructure Automation
-- Ansible control node (Linux/macOS/WSL)
-- SSH access to Proxmox nodes
-- Terraform CLI installed
-
-### Infrastructure Requirements
-- Proxmox VE cluster (4+ nodes recommended)
-- Network connectivity
-- Storage pools configured
-
-## 🚀 Quick Start
-
-### 1. Clone the Repository
+###  1. Grab the Code
 
 ```bash
 git clone https://github.com/Benmeddour/PFE2025-RSD.git
 cd PFE2025-RSD
 ```
 
-### 2. Set Up AI Agent (Optional)
+### 2. Set Up the AI Brain (Optional)
 
 ```bash
-cd ai_agent/Proxmox-Provisioning-Agent-python-code
-# Create .env file with your API keys
-echo "GOOGLE_API_KEY=your_key_here" > .env
-# Install dependencies
+cd ai_agent/Proxmox-Smart-Provisioning-Agent-withADK
+echo "GOOGLE_API_KEY=your_gemini_api_key" > .env
 pip install google-adk google-genai requests
 ```
 
-### 3. Configure Ansible
+### 3. Deploy the Infrastructure
+
+**Full production setup** (Proxmox cluster + Ceph + K3s + Monitoring):
+
+📘 **[22-Step Implementation Guide →](Documents/ThesisSheets/Implementation/implementation-description.md)**
+
+Includes:
+- Proxmox VE cluster setup
+- Ceph distributed storage
+- Software-defined networking
+- K3s HA Kubernetes cluster
+- Prometheus + Grafana monitoring
+- AI agent deployment
+
+**Quick test** (just the AI agent):
 
 ```bash
+# Configure Ansible inventory
 cd other_ansible_script
-# Edit inventory with your infrastructure IPs
-nano inventory.yaml
-# Update group variables with credentials (use Ansible Vault!)
-ansible-vault create group_vars/proxmox.yaml
+nano inventory.yaml  # Add your Proxmox IPs
+
+# Test Terraform provisioning
+cd terraform_script
+terraform init && terraform apply
 ```
 
-### 4. Deploy Infrastructure
+### Prerequisites
 
-```bash
-# Create Proxmox cluster
-ansible-playbook proxmox/create_cluster_inpmox01.yaml
+**For AI Agents:**
+- Google Cloud account (Gemini API access)
+- Python 3.8+
+- Proxmox VE cluster
 
-# Setup networking
-ansible-playbook proxmox/setup_network_ovs.yaml
-
-# Create VM templates
-# (use appropriate playbook)
-
-# Deploy K3s cluster
-cd ../k3s_cluster_creation_with_ansible_script
-ansible-playbook site.yml -i inventory/my-cluster/hosts.ini
-```
-
-### 5. Provision VMs with Terraform
-
-```bash
-cd ../terraform_script
-terraform init
-terraform plan
-terraform apply
-```
-
-### 📖 Full Implementation Guide
-
-For complete production deployment (22-step process including Proxmox cluster setup, Ceph storage, SDN configuration, K3s HA cluster, and monitoring):
-
-📘 [View Complete Implementation Guide →](Documents/ThesisSheets/Implementation/implementation-description.md)
+**For Full Deployment:**
+- 4+ bare-metal servers (Proxmox nodes)
+- Ansible control node
+- Terraform CLI
+- Network with VLAN support
 
 ---
 
-## 📚 Documentation & Resources
+## 📚 Deep Dive
 
-### Component Documentation
+Want to understand how everything works?
 
-Detailed documentation for each system component:
+###  Component Documentation
 
-- 🤖 [AI Agent System](ai_agent/Readme.md) - Multi-agent architecture overview
-- 🔧 [First Trial Agent](ai_agent/agent_withADK/first_trial_agent/Readme.md) - Initial prototype
-- 🚀 [Proxmox Provisioning Agent](ai_agent/Proxmox-Smart-Provisioning-Agent-withADK/README.md) - Final multi-agent system
-- ⚙️ [Ansible Scripts](other_ansible_script/README.md) - Infrastructure automation playbooks
-- ☸️ [K3s Deployment](k3s_cluster_creation_with_ansible_script/README.md) - Kubernetes cluster setup
-- 🏗️ [Terraform Scripts](terraform_script/README.md) - VM provisioning configurations
-- 📐 [Architecture Diagrams](diagrams/README.md) - Visual system representations
+| Component | What It Does | Learn More |
+|-----------|--------------|------------|
+| 🤖 **AI Agent System** | Multi-agent orchestration | [Deep dive →](ai_agent/Readme.md) |
+| 🔧 **First Trial** | Initial prototype | [See evolution →](ai_agent/agent_withADK/first_trial_agent/Readme.md) |
+| 🚀 **Final System** | Production agent | [Full docs →](ai_agent/Proxmox-Smart-Provisioning-Agent-withADK/README.md) |
+| ⚙️ **Ansible Automation** | Infrastructure playbooks | [Explore →](other_ansible_script/README.md) |
+| ☸️ **K3s Deployment** | Kubernetes cluster | [Deploy guide →](k3s_cluster_creation_with_ansible_script/README.md) |
+| 🏗️ **Terraform Configs** | VM provisioning | [Examples →](terraform_script/README.md) |
+| 📐 **Architecture** | System diagrams | [Visualize →](diagrams/README.md) |
 
-### Research & Learning Materials
+### 📖 Project Wiki
 
-Beyond code, this repository includes extensive academic documentation:
+**[📚 Comprehensive Wiki →](https://github.com/Benmeddour/ai-driven-infrastructure-resource-provisioning/wiki)**
 
-- **[ThesisSheets/](Documents/ThesisSheets/)** - Complete thesis documentation archive
-  - AI development iterations (first, second, third agent versions)
-  - Virtualization and containerization research
-  - Architecture designs and conceptual models
-  - Implementation planning and strategies
-  - Presentation materials
+In-depth guides, tutorials, and documentation including:
+- Detailed setup walkthroughs
+- Architecture deep-dives
+- Troubleshooting guides
+- Best practices and tips
+
+### Research Materials
+
+- **[ThesisSheets/](Documents/ThesisSheets/)** - The complete research story
+  - Evolution from first agent to final system
+  - What worked, what didn't, and why
+  - Architecture decisions and tradeoffs
   
-- **[Practical Guides](Documents/helpfull/)** - Hands-on Proxmox operational guides
-  - Installation procedures
-  - Network configuration (SDN, OVS, VLANs)
-  - Storage management
-  - VM template automation
+- **[Practical Guides](Documents/helpfull/)** - Hands-on Proxmox tutorials
+  - Installation and setup
+  - Networking (SDN, OVS, VLANs)
+  - Storage and VM templates
   
-- **[Research Papers](Documents/helpfull-research-paper/)** - Academic foundation papers
+- **[Research Papers](Documents/helpfull-research-paper/)** - Academic foundations
   - Auto-scaling frameworks
-  - Datacenter automation case studies
-  - Cloud resource provisioning research
+  - Datacenter automation
+  - Cloud provisioning research
 
-### Related Repositories
+### Related Work
 
-- **[terraform-proxmox-automatic-vm-provisioning](https://github.com/Benmeddour/terraform-proxmox-automatic-vm-provisioning)** - Additional Terraform configurations used in research
-- **[techno-tim/k3s-ansible](https://github.com/techno-tim/k3s-ansible)** - Original K3s Ansible playbook (modified for our use)
-
----
-
-## 🔒 Security Notice
-
-**⚠️ CRITICAL: This is research/development code**
-
-Before any production use:
-
-1. **Remove hardcoded credentials** - Use Ansible Vault, Terraform variables, secret managers
-2. **Enable SSL/TLS verification** - No `verify=False` or `pm_tls_insecure=true`
-3. **Implement proper RBAC** - Least privilege access
-4. **Use API tokens** - Avoid password authentication
-5. **Enable audit logging** - Track all infrastructure changes
-6. **Review generated code** - Never blindly apply AI-generated configurations
+- **[terraform-proxmox-automatic-vm-provisioning](https://github.com/Benmeddour/terraform-proxmox-automatic-vm-provisioning)** - Extended Terraform configs
+- **[techno-tim/k3s-ansible](https://github.com/techno-tim/k3s-ansible)** - Original K3s playbook (we modified it)
 
 ---
 
-## 📊 Research Journey & Academic Context
+## ⚠️ Important Notices
 
-This repository represents not just the final thesis deliverable, but the **complete research journey** including:
+### This is Research Code
 
-### What's Preserved
+**Built for learning and demonstration, not production.**
 
-- ✅ **Successful implementations** - Working multi-agent system and infrastructure automation
-- ❌ **Failed experiments** - First and second agent iterations that informed the final design
-- 🔄 **Iterative refinements** - Three complete agent versions showing evolution
-- 📚 **Research and learning** - Extensive documentation, comparisons, and academic papers
-- 🧪 **Test scenarios** - Validation methods and testing approaches
-- 📖 **Complete documentation** - From initial research to final implementation
+Before using in production:
+- 🔐 Remove hardcoded credentials (use vaults/secret managers)
+- ✅ Enable SSL/TLS verification
+- 🔒 Implement proper RBAC
+- 📝 Enable audit logging
+- 🧪 Test thoroughly in staging environment
+- 👁️ Review ALL AI-generated configurations
 
-### Academic Value
+*Use at your own risk. Always test in non-production first.*
 
-This thesis demonstrates:
-1. **Problem identification** - Manual infrastructure provisioning challenges
-2. **Research foundation** - Literature review and technology comparison
-3. **Solution design** - 8-layer architecture and multi-agent system
-4. **Iterative development** - Three agent versions showing progressive refinement
-5. **Real implementation** - Deployed on actual 4-node Proxmox cluster
-6. **Validation** - Test scenarios, monitoring, and performance evaluation
+### The Complete Journey
 
-📄 **Full Thesis Documents Available:**
-- [Complete thesis in English (PDF)](Pfe_30_RSD_EN.pdf)
-- [Complete thesis in French (PDF)](Pfe_30_RSD_FR.pdf)
+What makes this special? We kept **everything**:
 
----
+- ✅ **Working code** - The final multi-agent system
+- ❌ **Failed attempts** - First and second agent iterations
+- 🔄 **Iterations** - Three complete versions showing evolution
+- 📚 **Learning** - Documentation of why decisions were made
+- 🧪 **Tests** - Validation scenarios and results
+- 📖 **Context** - From initial research to final deployment
 
-## 🤝 Contributing
-
-This is an academic research project. While not actively seeking contributions, feedback and suggestions are welcome:
-
-- Report issues you encounter
-- Share improvements or adaptations
-- Provide feedback on the architecture
-
-## 📄 License
-
-This project is licensed under the Apache License 2.0 - see the [LICENSE](LICENSE) file for details.
-
-Portions of this project are based on open-source software with their respective licenses:
-- K3s Ansible playbook: Apache 2.0 (techno-tim/k3s-ansible)
-
-## ⚠️ Disclaimer
-
-This is a **research prototype** developed for academic purposes. While functional, it requires significant customization and security hardening before production use. The authors and contributors are not responsible for any issues arising from the use of this code in production environments.
-
-**Use at your own risk. Always test thoroughly in non-production environments first.**
-
-## 📧 Contact
-
-For questions about this thesis project, please refer to the thesis documentation or contact through the repository issues.
+**This isn't just a thesis deliverable—it's a research story.**
 
 ---
 
-**Repository**: [github.com/Benmeddour/PFE2025-RSD](https://github.com/Benmeddour/PFE2025-RSD)  
-**Project Type**: Master's Thesis (Computer Science - Networking & Distributed Systems)  
-**Status**: Research & Development  
-**Year**: 2024-2025  
-**License**: Apache 2.0
+## 🤝 Get Involved
+
+This is an academic project, but feedback is welcome!
+
+- 💬 **Questions?** Open an issue
+- 🐛 **Found a bug?** Let us know
+- 💡 **Improvements?** Share your ideas
+- 🎓 **Using for research?** We'd love to hear about it
+
+Not looking for code contributions, but **feedback on the approach and architecture is gold.**
+
+---
+
+## 📜 Legal Stuff
+
+**License:** Apache 2.0 - Use it, learn from it, build on it  
+**Attribution:** Based on open-source work (K3s Ansible playbook: Apache 2.0)
+
+**Full thesis documents:**
+- 📄 [Complete thesis (English)](Pfe_30_RSD_EN.pdf)
+- 📄 [Thèse complète (Français)](Pfe_30_RSD_FR.pdf)
+
+---
