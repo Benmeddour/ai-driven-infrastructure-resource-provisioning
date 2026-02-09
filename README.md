@@ -60,6 +60,8 @@ PFE2025-RSD/
 
 **🎓 Full Thesis:** Available in [English](Pfe_30_RSD_EN.pdf) and [French](Pfe_30_RSD_FR.pdf)
 
+**📚 Wiki:** For detailed documentation on technologies used, visit the [project wiki](https://github.com/Benmeddour/ai-driven-infrastructure-resource-provisioning/wiki)
+
 
 ## ✨ Key Features
 
