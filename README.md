@@ -7,6 +7,9 @@
 [![Year](https://img.shields.io/badge/Year-2024--2025-orange.svg)](README.md)
 [![Status](https://img.shields.io/badge/Status-Research%20%26%20Development-orange.svg)](README.md)
 
+
+![Complete Infrastructure Stack](./images/Globale-Implementation-diagram.drawio.png)
+
 ---
 
 ## 💡 The Big Idea
@@ -47,14 +50,50 @@ This Master's thesis project demonstrates how **multi-agent AI systems** can rep
 
 **Chat with AI → Get optimized infrastructure**
 
-```mermaid
-graph LR
-    A[💬 User Request] --> B[🤖 AI Agents]
-    B --> C[🔍 Analyze Cluster]
-    C --> D[🧠 Predict Resources]
-    D --> E[📄 Generate Terraform]
-    E --> F[🚀 Deploy VM]
-    F --> G[✅ Running & Optimized]
+```
+┌─────────────────────────────────────────────────────────────────────────────┐
+│                                                                             │
+│  User: "I need a web server VM"                                            │
+│                                                                             │
+└──────────────────────────────────┬──────────────────────────────────────────┘
+                                   │
+                                   ▼
+┌─────────────────────────────────────────────────────────────────────────────┐
+│                       🤖 AI Multi-Agent System                               │
+│                     (Google ADK + Gemini Models)                            │
+│                                                                             │
+│  Step 1: Chat Validator ──→ Extract requirements                           │
+│  Step 2: Data Collector ──→ Gather cluster state via API                   │
+│  Step 3: Manifest Generator ──→ Predict optimal resources                  │
+│          (Gemini 2.5 Pro analyzes workload type)                            │
+│  Step 4: Refinement Loop ──→ Perfect Terraform (10 iterations)              │
+│                                                                             │
+└──────────────────────────────────┬──────────────────────────────────────────┘
+                                   │
+                                   ▼
+┌─────────────────────────────────────────────────────────────────────────────┐
+│                   📄 Generated Terraform Configuration                       │
+│                                                                             │
+│  ✓ Optimal node selection based on utilization                             │
+│  ✓ Right-sized resources for workload type                                 │
+│  ✓ Network, storage, HA configuration                                      │
+│                                                                             │
+└──────────────────────────────────┬──────────────────────────────────────────┘
+                                   │
+                                   ▼
+┌─────────────────────────────────────────────────────────────────────────────┐
+│                   🚀 Automated Deployment                                    │
+│                  (Terraform + Ansible)                                      │
+│                                                                             │
+│  ⚙️  VM provisioned on Proxmox cluster                                      │
+│  ⚙️  Cloud-init configuration applied                                       │
+│  ⚙️  Monitoring and HA enabled                                              │
+│                                                                             │
+└──────────────────────────────────┬──────────────────────────────────────────┘
+                                   │
+                                   ▼
+                              ✅ Running VM
+                      (Optimized & Production-Ready)
 ```
 
 ### Behind the Scenes: Multi-Agent Orchestra
@@ -68,20 +107,6 @@ Our system uses **5 specialized AI agents** working together:
 5. **✨ Refiner Agent** - Perfects the Terraform output (up to 10 iterations)
 
 **The Magic:** Gemini 2.5 Pro analyzes workload patterns and knows that a PostgreSQL database needs more RAM than a static web server—automatically.
-
-### Live Architecture
-
-![Complete Infrastructure Stack](./images/Globale-Implementation-diagram.drawio.png)
-
-**What's Running:**
-- 🖥️ **4-node Proxmox VE cluster** with high availability
-- 💾 **Ceph hyper-converged storage** for data resilience
-- ☸️ **K3s Kubernetes** (3 masters + 2 workers)
-- 🤖 **AI server** running Google ADK + Gemini
-- 📊 **Full monitoring** (Prometheus + Grafana)
-- 🌐 **SDN networking** with Open vSwitch
-
-[Explore architecture details →](diagrams/)
 
 ---
 
