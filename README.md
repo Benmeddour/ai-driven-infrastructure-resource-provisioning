@@ -12,10 +12,14 @@
 
 This Master's thesis project demonstrates how **multi-agent AI systems powered by Google Gemini** can transform infrastructure provisioning. Instead of manually configuring VMs through trial and error, simply describe what you need in plain language—our AI agents analyze your Proxmox cluster in real-time, predict optimal resource allocations based on workload type, and generate production-ready Terraform configurations.
 
-**The result?** From chat message to running VM in ~30 seconds, with optimal resource sizing.
+**The result?** From chat message to running VM in ~2 minites, with optimal resource sizing.
 
 ![Complete Infrastructure Stack](./images/Globale-Implementation-diagram.drawio.png)
 
+
+### 🎓 Academic Context
+**Master's Thesis (PFE 2026)** | Computer Science - Networking & Distributed Systems
+📄 [Read the full thesis (English)](Pfe_30_RSD_EN.pdf) | [Lire en français](Pfe_30_RSD_FR.pdf)
 
 ## 📂 Repository Structure
 
@@ -58,8 +62,6 @@ PFE2025-RSD/
 - **Documentation** - Complete thesis documentation and practical guides
 - **Diagrams** - Architecture visualizations and workflow diagrams
 
-**🎓 Full Thesis:** Available in [English](Pfe_30_RSD_EN.pdf) and [French](Pfe_30_RSD_FR.pdf)
-
 **📚 Wiki:** For detailed documentation on technologies used, visit the [project wiki](https://github.com/Benmeddour/ai-driven-infrastructure-resource-provisioning/wiki)
 
 
@@ -79,7 +81,7 @@ PFE2025-RSD/
 **Example Use Cases:**
 - "I need a PostgreSQL database for 100 concurrent users" → Optimized DB server config
 - "Deploy a web application with load balancing" → Multi-VM setup with networking
-- "Create a development environment" → Right-sized resources without over-provisioning
+- "Create a Docker development environment for 5 developers" → Right-sized compute and storage
 
 
 
@@ -224,7 +226,7 @@ git clone https://github.com/Benmeddour/PFE2025-RSD.git
 cd PFE2025-RSD
 ```
 
-### 2. Set Up the AI Brain (Optional)
+### 2. Set Up the AI Brain
 
 ```bash
 cd ai_agent/Proxmox-Smart-Provisioning-Agent-withADK
@@ -272,7 +274,7 @@ terraform init && terraform apply
 - Network with VLAN support
 
 
-## 📚 Deep Dive
+## 📚 Documentation & Resources
 
 Want to understand how everything works?
 
